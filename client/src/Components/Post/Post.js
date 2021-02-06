@@ -8,6 +8,18 @@ import LikesAndShares from './LikesAndShares/LikesAndShares'
 
 const Post = ({data}) => {
 
+  const handleLikeClick = (event) => {
+    fetch(`http://localhost:5000/likes/${data._id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+      }
+    }).then(response => console.log(response));
+  }
+  
+
   return (
       <div>
         <AvatarInfo data={data}/>
@@ -18,9 +30,9 @@ const Post = ({data}) => {
             {data.Body}
           </Typography>
         </Grid>
-        <LikeBar />
+        <LikeBar likeClicked={handleLikeClick}/>
         <Divider />
-        <LikesAndShares />
+        <LikesAndShares Postdata={data}/>
     </div>
   );
 }

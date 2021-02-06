@@ -6,6 +6,8 @@ const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
 
+// Login user
+
 router.post('/', function(req, res,next) {
   passport.authenticate('local', {session:false}, (err,user,info) => {
     if (err || !user) {

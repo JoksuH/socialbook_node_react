@@ -10,8 +10,8 @@ const bcrypt = require('bcryptjs')
 /* GET all Users. */
 router.get('/friendsuggestions', function(req, res, next) {
 
-  // Find users who are currently not friends with the active user
-  userModel.find({id: {$nin: req.user.Friends}}).exec((err, users) => {
+  // Find users who are currently not friends with the active user or are the active user
+  userModel.find({$or: [{_id: {$nin: req.user.Friends}, Username: {$not: {$eq: req.user.Username }}}]}).exec((err, users) => {
     if (err) throw err;
     res.send(JSON.stringify(users));
   })
@@ -47,35 +47,18 @@ router.get('/', function(req, res, next) {
 });
 
 
-
-//Add new User
-router.post('/', function(req, res, next) {
-
-  bcrypt.hash(req.body.Password, 10, (err,hashedPassword) => {
-    if (err) console.log(err);
-
-    const user = new userModel({
-      Username: req.body.Username,
-      Password: hashedPassword,
-      Email: req.body.Email,
-      Firstname: req.body.Firstname,
-      Lastname: req.body.Lastname,
-      Birthday: req.body.Birthday,
-      Friends: [],
-      Posts: [],
-      Joined: new Date().toLocaleString()
-});
-
-  user.save(err => {
-    if (err) throw err;
-    res.send('User Added')
-  });
-});
-});
-
 //Edit a User
-router.put('/:userID', function(req, res, next) {
-    res.send('respond with a resource');
+router.put('/addfriend/:userID', function(req, res, next) {
+  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
+
+    if (err) throw err;
+    user.Friends.push(req.params.userID);
+    user.save(err => {
+      if (err) throw err;
+      res.send('Friend Added')
+    });
+    
+  })
 });
 
 //Delete a User

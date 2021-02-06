@@ -9,8 +9,14 @@ const mongoose = require('mongoose');
 /* GET all Posts. */
 router.get('/', function(req, res, next) {
 
-  postModel.find({'Author': req.user.Username}).exec((err, posts) => {
+  postModel.find({'Author': req.user.Username}).lean().exec((err, posts) => {
     if (err) throw err;
+    posts.forEach((post, index) => {
+      posts[index].Likes = post.Likes.length
+      console.log(post)
+
+    })
+   // console.log(posts)
     res.send(JSON.stringify(posts));
   })
   

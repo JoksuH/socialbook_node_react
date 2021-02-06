@@ -5,11 +5,11 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import ShareIcon from '@material-ui/icons/Share'
 
 
-const LikeBar = (props) => {
+const LikeBar = ({likeClicked}) => {
 
   return (
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-            <Box display="flex" flexDirection="row">
+            <Box display="flex" flexDirection="row" onClick={likeClicked}>
                 <ThumbUpIcon color="primary"/>
                 <Typography>Like</Typography>
 

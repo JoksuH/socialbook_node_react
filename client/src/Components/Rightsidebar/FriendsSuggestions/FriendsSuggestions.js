@@ -25,7 +25,19 @@ function FriendsSuggestions() {
 
   }, [])
 
+  const handleAddFriend = (event) => {
 
+    console.log(event.target.parentElement.id)
+    fetch(`http://localhost:5000/users/addfriend/${event.target.parentElement.id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+      }
+    }).then((response) => console.log(response))
+
+  }
 
   return (
     <div className="FriendsSuggestions">
@@ -35,7 +47,7 @@ function FriendsSuggestions() {
         {
           (Suggestions.length > 0) ? Suggestions.map(user => {
            return( 
-           <Suggestion user={user} />
+           <Suggestion user={user} handleAddFriend={handleAddFriend}/>
            )
           })
           : <Typography>

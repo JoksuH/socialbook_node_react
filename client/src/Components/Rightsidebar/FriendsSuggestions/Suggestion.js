@@ -3,14 +3,14 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 
-function Suggestion({user}) {
+function Suggestion({user, handleAddFriend}) {
 
   return (
     <Box display="flex" flexDirection="row">
         <Typography>
             {user.Firstname + ' ' + user.Lastname}
         </Typography>
-        <Button>Send Friend Request</Button>
+        <Button onClick={handleAddFriend} id={user._id}>Send Friend Request</Button>
     </Box>
   );
 }

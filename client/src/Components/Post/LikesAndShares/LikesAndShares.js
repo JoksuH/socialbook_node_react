@@ -5,18 +5,18 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import ShareIcon from '@material-ui/icons/Share'
 
 
-const LikesAndShares = (props) => {
+const LikesAndShares = ({Postdata}) => {
 
   return (
       <Box display="flex" flexDirection="row" justifyContent="space-between">
             <Box display="flex" flexDirection="row">
                 <ThumbUpIcon color="primary"/>
-                <Typography>13</Typography>
+                <Typography>{Postdata.Likes}</Typography>
 
             </Box>
             <Box display="flex" flexDirection="row">
                 <ChatBubbleOutlineIcon/>
-                <Typography>23</Typography>
+                <Typography>{Postdata.Comments.length}</Typography>
 
             </Box>
 
