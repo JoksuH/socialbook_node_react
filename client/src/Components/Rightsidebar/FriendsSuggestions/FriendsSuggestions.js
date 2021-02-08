@@ -2,6 +2,12 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
 import Suggestion from './Suggestion'
+import { styled } from '@material-ui/core/styles'
+
+const MainContainer = styled(Box)({
+  marginTop: 20
+
+})
 
 
 function FriendsSuggestions() {
@@ -18,36 +24,20 @@ function FriendsSuggestions() {
         Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
       }
     }).then((response) => response.json())
-    .then((json) => {
-      console.log(json)
-      SetSuggestions(json);
-    })
+    .then((json) => SetSuggestions(json));
 
   }, [])
 
-  const handleAddFriend = (event) => {
-
-    console.log(event.target.parentElement.id)
-    fetch(`http://localhost:5000/users/addfriend/${event.target.parentElement.id}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
-      }
-    }).then((response) => console.log(response))
-
-  }
 
   return (
-    <div className="FriendsSuggestions">
-        <Typography>
+    <MainContainer>
+        <Typography variant="subtitle2">
             People you may know...
         </Typography>
         {
           (Suggestions.length > 0) ? Suggestions.map(user => {
            return( 
-           <Suggestion user={user} handleAddFriend={handleAddFriend}/>
+           <Suggestion user={user} key={user._id}/>
            )
           })
           : <Typography>
@@ -56,7 +46,7 @@ function FriendsSuggestions() {
 
         }
 
-    </div>
+    </MainContainer>
   );
 }
 

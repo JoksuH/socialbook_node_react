@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const commentModel = require('./../models/commentModel')
+const postModel = require('./../models/postModel');
+
 const mongoose = require('mongoose');
 
 
@@ -28,15 +30,26 @@ router.post('/', function(req, res, next) {
   console.log(req.body);
 
   const comment = new commentModel({
-    username: req.body.username,
-    comment: req.body.comment,
-    article: req.body.articleid,
-    dateAdded: new Date().toLocaleString(),
+    Author: req.body.Author,
+    Comment: req.body.Comment,
+    ParentPost: req.body.ParentPost
 });
 
 comment.save(err => {
     if (err) throw err;
+    postModel.findOne({'_id': req.body.ParentPost}).exec((err, result) => { 
+      if (err) throw err;
+  
+      result.Comments.push(comment);
+  
+      result.save(err => {
+        if (err) throw err;
+      });
+
+    res.status(200);
   });
+  
+});
 });
 
 //Edit a Comment

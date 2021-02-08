@@ -22,16 +22,19 @@ function PostListNew(props) {
               Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
             }
           }).then((response) => response.json())
-          .then((json) => SetPosts(json));
+          .then((json) => {
+            console.log(json);
+            SetPosts(json)
+          });
     }
   return (
     <div className="PostList">
       <Grid container direction="column">
         {(Posts.length > 0) ? Posts.map(post => {
           return(
-            <Grid item> 
-            <Paper>
-              <Post data={post} />
+            <Grid item key={post._id}> 
+            <Paper elevation={1}>
+              <Post post={post} />
             </Paper>
           <Divider />
           </Grid>

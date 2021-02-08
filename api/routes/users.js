@@ -49,15 +49,13 @@ router.get('/', function(req, res, next) {
 
 //Edit a User
 router.put('/addfriend/:userID', function(req, res, next) {
-  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
-
+  userModel.find({'_id': req.user.id}).exec((err, user) => {
     if (err) throw err;
-    user.Friends.push(req.params.userID);
-    user.save(err => {
-      if (err) throw err;
-      res.send('Friend Added')
-    });
-    
+    req.user.Friends.push(req.params.userID);
+     user.save(err => {
+    if (err) throw err;
+    res.status(200)
+  });
   })
 });
 

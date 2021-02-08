@@ -9,8 +9,13 @@ const mongoose = require('mongoose');
 /* GET all Posts. */
 router.get('/', function(req, res, next) {
 
-  postModel.find({'Author': req.user.Username}).lean().exec((err, posts) => {
+  //Find all posts by user, populate in Comments with their author
+  //Turn to lean() so that you can change likes to a number (different type of data)
+
+  postModel.find({'Author': req.user._id}).populate('Author').populate({path:'Comments', populate: { path: 'Author' }}).lean().exec((err, posts) => {
     if (err) throw err;
+
+    //Change Id's of persons who liked the post to number of likes before returning
     posts.forEach((post, index) => {
       posts[index].Likes = post.Likes.length
       console.log(post)
@@ -35,7 +40,7 @@ router.get('/:postID', function(req, res, next) {
 router.post('/add', function(req, res, next) {
 
     const post = new postModel({
-    Author: req.user.Username,
+    Author: req.user._id,
     Body: req.body.body,
   });
 

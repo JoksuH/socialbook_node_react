@@ -1,6 +1,5 @@
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
 import { styled } from '@material-ui/core/styles'
 
 const StyledBox = styled(Box)({
@@ -9,14 +8,6 @@ const StyledBox = styled(Box)({
   marginBottom: '30px'
 
 })
-
-const StyledAvatar = styled(Avatar)({
-  marginRight: '10px',
-  marginTop: "10px",
-  marginLeft: "10px"
-
-})
-
 
 
 const FormatDate = (date) => {
@@ -35,9 +26,6 @@ const AvatarInfo = ({data}) => {
 
   return (
     <StyledBox >
-        <StyledAvatar>
-
-        </StyledAvatar>
         <Box>
         <Typography variant='button' color="primary">
           {data.Author.Firstname + ' ' + data.Author.Lastname}

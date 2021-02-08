@@ -1,10 +1,19 @@
 import AvatarField from './AvatarField/AvatarField'
 import SidebarLinks from './SidebarLinks/SidebarLinks'
 import Button from '@material-ui/core/Button'
-import Avatar from '@material-ui/core/Avatar'
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
+import { styled } from '@material-ui/core/styles'
 
+const MainGrid = styled(Grid)({
+
+  display:"flex",
+  flexDirection:"column",
+  justifyContent:"start",
+  background: "rgb(255,255,255)",
+  background: "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(237,237,237,1) 100%)"
+});
 
 function Leftsidebar({user}) {
 
@@ -15,11 +24,11 @@ function Leftsidebar({user}) {
   }
 
   return (
-    <div className="Leftsidebar">
+    <MainGrid>
       <AvatarField user={user}/>
       <SidebarLinks />
-      <Button onClick={Logout}>LogOut</Button>
-    </div>
+      <Button variant="contained" color="primary" onClick={Logout}>LogOut</Button>
+    </MainGrid>
   );
 }
 

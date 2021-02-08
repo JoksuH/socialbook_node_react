@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const comment = mongoose.model('Comment', new mongoose.Schema({
-    username: {type: String, required: true},
-    comment: {type: String, required: true},
-    article: mongoose.Schema.Types.ObjectId,
-    dateAdded: {type: Date, required: true}
+const comment = mongoose.model('comment', new mongoose.Schema({
+    Author: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
+    Comment: {type: String, required: true},
+    ReplyTo: {type: mongoose.Schema.Types.ObjectId, ref: 'comment'},
+    ParentPost: {type: mongoose.Schema.Types.ObjectId, ref: 'post'},
+    dateAdded: {type: Date, default: Date.now}
   }))
   
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const user = mongoose.model('User', new mongoose.Schema({
+const user = mongoose.model('user', new mongoose.Schema({
     Username: {type: String, required: true},
     Password: {type: String, required: true},
     Email: {type: String, required: true, match: /\w+@\w+.\w+/},
