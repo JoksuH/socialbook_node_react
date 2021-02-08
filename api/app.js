@@ -63,7 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', passport.authenticate('jwt', {session:false}), usersRouter);
 app.use('/user/auth', authRouter);
-app.use('/comments', commentsRouter);
+app.use('/comments', passport.authenticate('jwt', {session:false}), commentsRouter);
 app.use('/posts', passport.authenticate('jwt', {session:false}), postsRouter);
 app.use('/likes',passport.authenticate('jwt', {session:false}), likesRouter)
 

@@ -24,7 +24,7 @@ const FormatDate = (date) => {
 }
 
 
-const AvatarInfo = ({data}) => {
+const CommentTime = ({data}) => {
 
   console.log(data)
   let formattedDate = FormatDate(data.dateAdded);
@@ -40,4 +40,4 @@ const AvatarInfo = ({data}) => {
   );
 }
 
-export default AvatarInfo;
+export default CommentTime;

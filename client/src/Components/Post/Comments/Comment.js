@@ -3,8 +3,8 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar'
 import { styled } from '@material-ui/core/styles'
-import CommentName from './../AvatarInfo/CommentName';
-import CommentTime from './../AvatarInfo/CommentTime';
+import CommentName from './CommentName';
+import CommentTime from './CommentTime';
 
 import { useState } from 'react';
 

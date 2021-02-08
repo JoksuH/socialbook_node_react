@@ -30,13 +30,14 @@ router.post('/', function(req, res, next) {
   console.log(req.body);
 
   const comment = new commentModel({
-    Author: req.body.Author,
+    Author: req.user._id,
     Comment: req.body.Comment,
     ParentPost: req.body.ParentPost
 });
 
 comment.save(err => {
     if (err) throw err;
+
     postModel.findOne({'_id': req.body.ParentPost}).exec((err, result) => { 
       if (err) throw err;
   
@@ -44,9 +45,13 @@ comment.save(err => {
   
       result.save(err => {
         if (err) throw err;
+
+        commentModel.findById(comment._id).populate('Author').exec((err, result) => { 
+          if (err) throw err;
+          res.send(JSON.stringify(result))
+        });
       });
 
-    res.status(200);
   });
   
 });

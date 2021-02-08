@@ -18,7 +18,6 @@ router.get('/', function(req, res, next) {
     //Change Id's of persons who liked the post to number of likes before returning
     posts.forEach((post, index) => {
       posts[index].Likes = post.Likes.length
-      console.log(post)
 
     })
    // console.log(posts)

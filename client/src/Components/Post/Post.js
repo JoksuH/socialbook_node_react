@@ -51,10 +51,12 @@ const Post = ({post}) => {
       },
       body: JSON.stringify({
         Comment: Comment,
-        ParentPost: post._id,
-        Author: post.Author._id
+        ParentPost: post._id
       })
-    }).then(response => console.log(response));
+    }).then(response => response.json())
+    .then((json) => {
+      SetComments(Comments.concat(json))
+    });
 
     event.preventDefault();
 
