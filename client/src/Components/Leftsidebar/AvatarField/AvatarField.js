@@ -9,9 +9,7 @@ function AvatarField({user}) {
   return (
 
       <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
-        <Avatar>
-
-        </Avatar>
+        <Avatar alt={user.Username} src={user.Avatar}/>
         <Typography>
          {(user) ? user.Firstname + ' ' + user.Lastname : ''}
         </Typography>

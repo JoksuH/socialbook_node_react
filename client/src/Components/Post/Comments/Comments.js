@@ -3,6 +3,7 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography';
 import { styled } from '@material-ui/core/styles'
 import Comment from './Comment';
+import LoadMoreComments from './LoadMoreComments'
 import { useState } from 'react'
 
 const StyledGrid = styled(Grid)({
@@ -14,22 +15,45 @@ const StyledGrid = styled(Grid)({
 
 const Comments = ({Comments}) => {
 
-  
+  const [AmountOfCommentsToLoad, SetAmountOfCommentsToLoad] = useState(2);
+
+  const GetMoreComments = (event) => {
+
+      SetAmountOfCommentsToLoad(AmountOfCommentsToLoad + 3);
+
+  }
+
 
   return (
       <StyledGrid>
-        {(Comments) ? Comments.map((comment) => {
+        {(Comments.length <= AmountOfCommentsToLoad) ? Comments.map((comment) => {
           return(
             <div>
             <Comment data={comment}/>
             <Divider />
             </div>
           )
+          })
+        : 
+          Comments.slice(0,AmountOfCommentsToLoad).map((comment) => {
+          return(
+            <div>
+            <Comment data={comment}/>
+            <Divider />
+            </div>
+          )
+          })
+        }
+        {(Comments.length > AmountOfCommentsToLoad) ?
+          <LoadMoreComments onClick={GetMoreComments}/>
+          : <p></p>
+        }
 
-        })
-        : <p></p>}
+        
+
     </StyledGrid>
   );
 }
 
 export default Comments;
+//LoadMoreComments

@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react'
 
 const StyledGrid = styled(Grid)({
 
-  marginBottom: "50px"
+  marginBottom: "50px",
 
 });
 
@@ -41,7 +41,7 @@ const Post = ({post}) => {
   }
 
   const handleLeaveComment = (event) => {
-    console.log(event)
+    
     fetch(`http://localhost:5000/comments/`, {
       method: 'POST',
       headers: {
@@ -55,7 +55,10 @@ const Post = ({post}) => {
       })
     }).then(response => response.json())
     .then((json) => {
-      SetComments(Comments.concat(json))
+      SetComments(Comments.concat(json));
+      
+      //Reset comment fields text value
+      event.target.firstElementChild.lastChild.firstChild.value = ''
     });
 
     event.preventDefault();
@@ -77,7 +80,7 @@ const Post = ({post}) => {
         <Divider variant="middle"/>
         <LikesAndShares Postdata={post} liked={Liked}/>
         <Divider />
-        <CommentListing Comments={Comments}/>
+        <CommentListing Comments={Comments} />
         <LeaveComment handleLeaveComment={handleLeaveComment} handleTextChange={onTextChange}/>
     </StyledGrid>
   );

@@ -17,25 +17,6 @@ router.get('/friendsuggestions', function(req, res, next) {
   })
 });
 
-router.post('/auth', function(req, res,next) {
-  passport.authenticate('local', {session:false}, (err,user,info) => {
-    if (err || !user) {
-      return res.status(400).json({
-        message: 'Something wrong with the user',
-        user: user
-      });
-    }
-    req.login(user, {session:false}, (err) => {
-      if (err) res.send(err)
-
-      const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET);
-      return res.json({token});
-      });
-
-  })(req,res,next);
-  
-});
-
 //Get Specific User by ID
 router.get('/', function(req, res, next) {
   console.log(req.user.Username)
@@ -49,12 +30,12 @@ router.get('/', function(req, res, next) {
 
 //Edit a User
 router.put('/addfriend/:userID', function(req, res, next) {
-  userModel.find({'_id': req.user.id}).exec((err, user) => {
+  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
     if (err) throw err;
-    req.user.Friends.push(req.params.userID);
+    user.Friends.push(req.params.userID);
      user.save(err => {
-    if (err) throw err;
-    res.status(200)
+      if (err) throw err;
+      res.send('OK')
   });
   })
 });

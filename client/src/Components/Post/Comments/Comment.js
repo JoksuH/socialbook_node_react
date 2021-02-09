@@ -45,10 +45,7 @@ const Comment = ({data}) => {
 
   return (
       <MainGrid>
-          <StyledAvatar>
-
-          </StyledAvatar>
-
+            <StyledAvatar alt={data.Author.Username} src={data.Author.Avatar}/>
           <InnerGrid>
             <Grid item xs={12}>
                     <CommentName data={data}/>

@@ -16,8 +16,6 @@ const MainBox = styled(Box)({
   });
 
 const Text = styled(TextField)({
-
-    marginLeft: 15
   
   });
 
@@ -30,7 +28,7 @@ const LeaveComment = ({handleLeaveComment, handleTextChange}) => {
 
   return (
       <MainBox>
-          <Avatar>
+          <Avatar style={{marginRight: 15}}>
           </Avatar>
           <form style={{width: "100%"}} noValidate onSubmit={handleLeaveComment}>
           <Text

@@ -20,17 +20,17 @@ const LikesAndShares = ({Postdata, liked}) => {
       <StyledBox justifyContent="space-between">
           {(liked) ? 
             <StyledBox>
-                <ThumbUpIcon color="default"/>
+                <ThumbUpIcon color="default" style={{paddingRight: '5px'}} />
                 <Typography>{Postdata.Likes + 1}</Typography>
             </StyledBox> 
             :
             <StyledBox>
-            <ThumbUpIcon color="primary"/>
+            <ThumbUpIcon color="primary" style={{paddingRight: '5px'}} />
             <Typography>{Postdata.Likes}</Typography>
             </StyledBox>
             }
             <StyledBox>
-                <ChatBubbleOutlineIcon/>
+                <ChatBubbleOutlineIcon style={{paddingRight: '5px'}} />
                 <Typography>{Postdata.Comments.length}</Typography>
 
             </StyledBox>

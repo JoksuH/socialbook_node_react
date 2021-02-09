@@ -35,9 +35,7 @@ const AvatarInfo = ({data}) => {
 
   return (
     <StyledBox >
-        <StyledAvatar>
-
-        </StyledAvatar>
+        <StyledAvatar alt={data.Author.Username} src={data.Author.Avatar}/>
         <Box>
         <Typography variant='button' color="primary">
           {data.Author.Firstname + ' ' + data.Author.Lastname}

@@ -9,10 +9,10 @@ const mongoose = require('mongoose');
 /* GET all Posts. */
 router.get('/', function(req, res, next) {
 
-  //Find all posts by user, populate in Comments with their author
+  //Find all posts by user and their friends, populate in Comments with their author
   //Turn to lean() so that you can change likes to a number (different type of data)
 
-  postModel.find({'Author': req.user._id}).populate('Author').populate({path:'Comments', populate: { path: 'Author' }}).lean().exec((err, posts) => {
+  postModel.find({$or: [{'Author': req.user._id}, {"Author" : { $in: req.user.Friends}}]}).populate('Author').populate({path:'Comments', populate: { path: 'Author' }}).sort('-dateAdded').lean().exec((err, posts) => {
     if (err) throw err;
 
     //Change Id's of persons who liked the post to number of likes before returning

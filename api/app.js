@@ -75,7 +75,7 @@ passport.use(new JWTStrategy({
 },
     function (jwtPayload, cb) {
 
-      return user.findOne({"id": jwtPayload.id})
+      return user.findOne({"_id": jwtPayload._id})
           .then(user => {
               return cb(null, user);
           })
