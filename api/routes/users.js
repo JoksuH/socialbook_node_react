@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 router.get('/friendsuggestions', function(req, res, next) {
 
   // Find users who are currently not friends with the active user or are the active user
-  userModel.find({$or: [{_id: {$nin: req.user.Friends}, Username: {$not: {$eq: req.user.Username }}}]}).exec((err, users) => {
+  userModel.find({$or: [{_id: {$nin: req.user.Friends}, Username: {$not: {$eq: req.user.Username }}}]}).limit(8).exec((err, users) => {
     if (err) throw err;
     res.send(JSON.stringify(users));
   })
@@ -27,10 +27,22 @@ userModel.find({_id: {$in: req.user.Friends}}).exec((err, users) => {
   })
 });
 
+
 //Get Specific User by ID
 router.get('/', function(req, res, next) {
-  console.log(req.user.Username)
   userModel.findOne({'Username': req.user.Username}).exec((err, user) => {
+    if (err) throw err;
+    res.send(JSON.stringify(user));
+  })
+  
+});
+
+//Get Specific User by ID
+router.get('/friendrequests', function(req, res, next) {
+  console.log('request shows ups')
+
+  userModel.findOne({'Username': req.user.Username}).populate('Friendrequests', 'Fullname Avatar').exec((err, user) => {
+    console.log(user)
     if (err) throw err;
     res.send(JSON.stringify(user));
   })
@@ -40,7 +52,7 @@ router.get('/', function(req, res, next) {
 //Get Specific User by ID
 router.get('/search/:searchterm', function(req, res, next) {
   
-  userModel.find({'Fullname': {$regex:  req.params.searchterm, $options: "i"}}).exec((err, users) => {
+  userModel.find({'Fullname': {$regex:  req.params.searchterm, $options: "i"}}).limit(5).exec((err, users) => {
     console.log(users)
     if (err) throw err;
     res.send(JSON.stringify(users));
@@ -49,15 +61,23 @@ router.get('/search/:searchterm', function(req, res, next) {
 });
 
 
-//Add a friend to current user
-router.put('/addfriend/:userID', function(req, res, next) {
-  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
+//Send a friend request to specified user
+router.put('/requestfriend/:userID', function(req, res, next) {
+  userModel.findOne({'_id': req.params.userID}).exec((err, user) => {
+
     if (err) throw err;
-    user.Friends.push(req.params.userID);
+    console.log(typeof(user.Friendrequests))
+   /* if (user.Friendrequests.includes(req.user.id))
+      res.status(403);
+    else if (user.Friend.includes(req.user.id))
+      res.status(403);
+    else */
+    user.Friendrequests.push(req.user.id);
      user.save(err => {
       if (err) throw err;
       res.send('OK')
   });
+
   })
 });
 

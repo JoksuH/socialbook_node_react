@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
 import Friend from './Friend'
+import Rightsidebar from './../Rightsidebar/Rightsidebar';
 import { styled } from '@material-ui/core/styles'
 
 const MainContainer = styled(Box)({
@@ -30,6 +31,7 @@ function ManageFriends() {
 
 
   return (
+    <>
     <MainContainer>
         <Typography variant="subtitle2">
             People you are currently following...
@@ -47,6 +49,8 @@ function ManageFriends() {
         }
 
     </MainContainer>
+    <Rightsidebar />
+    </>
   );
 }
 

@@ -12,6 +12,7 @@ const user = mongoose.model('user', new mongoose.Schema({
     Birthday: {type: String, required: true},
     Joined: {type: Date, default: Date.now},
     Friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+    Friendrequests: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
     Posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'post'}],
   }))
   

@@ -1,18 +1,17 @@
 import MainContent from './../MainContent/Maincontent'
-
-import Box from '@material-ui/core/Box';
-import { styled } from '@material-ui/core/styles';
-import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import Rightsidebar from './../Rightsidebar/Rightsidebar';
 
 
-
-function HomeView(props) {
+function HomeView() {
 
 
   return (
-
+      <>
         <MainContent />
+        <Rightsidebar />
+        
+      </>
+
   );
 }
 

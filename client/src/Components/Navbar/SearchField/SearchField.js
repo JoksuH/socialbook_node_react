@@ -12,7 +12,8 @@ const MainGrid = styled(Grid)({
 
   height: 50,
   width: '30%',
-  background: "rgb(19, 151, 213)"
+  background: "rgb(19, 151, 213)",
+  borderRadius: 6
 });
 
 
@@ -31,6 +32,9 @@ function SearchField() {
   const HandleSearchInput = (event) => {
 
     //fetch suggestions and add them to list
+    // if else so that values get removed from window when searchfield is emptied from text
+
+    if (event.target.value !== '') {
     
     fetch(`http://localhost:5000/users/search/${event.target.value}`, {
       method: 'GET',
@@ -41,7 +45,11 @@ function SearchField() {
       }
     }).then((response) => response.json())
     .then((json) => SetSearchSuggestions(json));
-
+  } 
+  // Remove suggestions from window if searchfield empty i.e cleared with backspace etc.
+    else {
+      SetSearchSuggestions([]);
+  }
   }
 
   return (
@@ -54,13 +62,11 @@ function SearchField() {
         color="primary"
         onChange={HandleSearchInput}
       />
-      { (SearchSuggestions) ? SearchSuggestions.map((suggestion) => {
+      { (SearchSuggestions) && SearchSuggestions.map((suggestion) => {
           return (
             <SearchSuggestion user={suggestion} />
           )
-
       })
-      : <p></p>
 
       }
     </MainGrid>

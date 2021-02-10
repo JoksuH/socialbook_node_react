@@ -28,7 +28,6 @@ function PostListNew(props) {
           });
     }
   return (
-    <div className="PostList">
       <Grid container direction="column">
         {(Posts.length > 0) ? Posts.map(post => {
           return(
@@ -45,7 +44,6 @@ function PostListNew(props) {
 
       </Grid>
      
-    </div>
   );
 }
 

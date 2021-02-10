@@ -31,7 +31,7 @@ function FriendsSuggestions() {
 
   const handleAddFriend = (event) => {
 
-    fetch(`http://localhost:5000/users/addfriend/${event.target.parentElement.id}`, {
+    fetch(`http://localhost:5000/users/requestfriend/${event.target.parentElement.id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -41,7 +41,7 @@ function FriendsSuggestions() {
     }).then((response) =>  {
       //Update Friend suggestion list by removing the added friend
       const CutDownSuggestions = Suggestions.filter(suggestion => suggestion._id !== event.target.parentElement.id);
-      if (CutDownSuggestions.length < 2) {
+      if (CutDownSuggestions.length < 5) {
         SetFetchMoreSuggestions(!FetchMoreSuggestions);
       }
       else {
@@ -60,7 +60,7 @@ function FriendsSuggestions() {
             People you may know...
         </Typography>
         {
-          (Suggestions.length > 0) ? Suggestions.slice(0,6).map(user => {
+          (Suggestions.length > 0) ? Suggestions.map(user => {
            return( 
            <Suggestion user={user} key={user._id} onAddFriend={handleAddFriend}/>
            )

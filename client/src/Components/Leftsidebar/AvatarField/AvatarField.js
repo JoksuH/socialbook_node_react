@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 function AvatarField({user}) {
 
 
-  const User = user.user[0]
+  const User = user.user;
   console.log(user)
 
   return(
@@ -16,7 +16,7 @@ function AvatarField({user}) {
        <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
        <Avatar alt={User.Firstname} src={User.Avatar}/>
        <Typography>
-        {user.Fullname}
+        {User.Fullname}
        </Typography>
        </Box>
       :

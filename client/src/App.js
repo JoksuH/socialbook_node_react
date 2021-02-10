@@ -3,7 +3,6 @@ import Signup from './Components/Signup/Signup';
 import HomeView from './Components/Home/HomeView';
 import ManageFriends from './Components/ManageFriends/ManageFriends';
 import Leftsidebar from './Components/Leftsidebar/Leftsidebar';
-import Rightsidebar from './Components/Rightsidebar/Rightsidebar';
 import Navbar from './Components/Navbar/Navbar';
 
 
@@ -69,7 +68,6 @@ function App() {
             <PrivateRoute component={HomeView} path="/" exact/>
             <PrivateRoute component={ManageFriends} path="/friends" exact/>
 
-            <Rightsidebar />
           </>
           :  <PublicRoute component={Login} onLogin={handleLogin} restricted={false} path="/" exact />
 

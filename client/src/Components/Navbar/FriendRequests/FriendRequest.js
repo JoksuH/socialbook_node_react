@@ -23,31 +23,40 @@ const InnerContainer = styled(Box)({
 
 })
 
+const StyledButton = styled(Button)({
+    marginTop: 5,
+    height: '80%',
+    marginLeft: 20
+  })
+
 const Text = styled(Typography)({
-  marginTop: 15,
+  marginTop: 10,
   marginLeft: 20
 })
 
 const StyledAvatar = styled(Avatar)({
   marginRight: '10px',
-  marginTop: "10px",
   marginLeft: "10px"
 
 })
 
 
-function SearchSuggestion({user}) {
+function FriendRequest({user}) {
+
+    console.log(user)
 
   return (
         <InnerContainer >
           <StyledAvatar alt={user.Username} src={user.Avatar}/>
-
           <Text>
               {user.Fullname}
           </Text>
+          <StyledButton color="primary" variant="contained">Accept</StyledButton>
+          <StyledButton color="secondary" variant="contained">Reject</StyledButton>
+
         </InnerContainer>
         
   );
 }
 
-export default SearchSuggestion;
+export default FriendRequest;

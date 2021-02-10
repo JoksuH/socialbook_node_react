@@ -25,10 +25,7 @@ function SidebarLinks() {
 
         </ListItem>
         <ListItem>
-            <ListItemText>
-                Your Wall
-            </ListItemText>
-
+        <Link to="/profile">Profile</Link>
         </ListItem>
         <ListItem>
             <ListItemText>

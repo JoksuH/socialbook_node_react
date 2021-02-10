@@ -1,4 +1,5 @@
 import SearchField from './SearchField/SearchField';
+import FriendRequests from './FriendRequests/FriendRequests'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useHistory } from 'react-router-dom'
@@ -14,7 +15,8 @@ const MainGrid = styled(Grid)({
   flexDirection:"row",
   justifyContent:"start",
   height: 50,
-  background: "rgb(19, 151, 213)"
+  background: "rgb(19, 151, 213)",
+  marginBottom: 20
 });
 
 
@@ -38,6 +40,7 @@ function Navbar({user}) {
     <MainGrid>   
         <Image src={blueLogoWide} />     
       <SearchField />
+      <FriendRequests user={user}/>
     </MainGrid>
   );
 }
