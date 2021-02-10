@@ -22,14 +22,13 @@ const Text = styled(TextField)({
 
     
 
-const LeaveComment = ({handleLeaveComment, handleTextChange}) => {
+const LeaveComment = ({handleLeaveComment, handleTextChange, Post}) => {
 
  
 
   return (
       <MainBox>
-          <Avatar style={{marginRight: 15}}>
-          </Avatar>
+          <Avatar style={{marginRight: 15}} alt={Post.Author.Username} src={Post.Author.Avatar}/>
           <form style={{width: "100%"}} noValidate onSubmit={handleLeaveComment}>
           <Text
             label="Share your thoughts"

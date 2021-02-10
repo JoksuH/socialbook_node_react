@@ -39,15 +39,23 @@ const StyledAvatar = styled(Avatar)({
 })
 
 
-function Suggestion({user, onAddFriend}) {
+function Friend({user}) {
 
-    const [FriendRequested, SetFriendRequested] = useState(false);
+    const [FriendDeleted, SetFriendDeleted] = useState(false);
 
-   
-const handleFriendAdd = (event) => {
-  SetFriendRequested(true);
-  onAddFriend(event);
-}
+    const handleRemoveFriend = (event) => {
+
+        fetch(`http://localhost:5000/users/removefriend/${event.target.parentElement.id}`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+          }
+        }).then((response) => SetFriendDeleted(true));
+    
+    
+      }
 
   return (
     <MainContainer>
@@ -58,13 +66,13 @@ const handleFriendAdd = (event) => {
               {user.Fullname}
           </Text>
         </InnerContainer>
-        {(FriendRequested) ?
-        <FriendButton variant="contained" color="default" disabled={true} id={user._id}>Friend Request Sent</FriendButton>
+        {(FriendDeleted) ?
+        <FriendButton variant="contained" color="default" id={user._id}>Friend Removed</FriendButton>
         :
-        <FriendButton variant="contained" color="primary" onClick={handleFriendAdd} id={user._id}>Send Friend Request</FriendButton>
+        <FriendButton variant="contained" color="primary" onClick={handleRemoveFriend} id={user._id}>Remove Friend</FriendButton>
         }
     </MainContainer>
   );
 }
 
-export default Suggestion;
+export default Friend;

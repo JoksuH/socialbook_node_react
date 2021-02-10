@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import { Link } from 'react-router-dom'
 
 
 
@@ -15,10 +16,7 @@ function SidebarLinks() {
 
       <List>
         <ListItem>
-            <ListItemText>
-                Homepage
-            </ListItemText>
-
+           <Link to="/">Homepage</Link>
         </ListItem>
         <ListItem>
             <ListItemText>
@@ -39,9 +37,7 @@ function SidebarLinks() {
 
         </ListItem>
         <ListItem>
-            <ListItemText>
-                Manage Friendlist
-            </ListItemText>
+            <Link to="/friends">Manage Friends</Link>
 
         </ListItem>
 

@@ -41,6 +41,7 @@ router.post('/add', function(req, res, next) {
       Email: req.body.Email,
       Firstname: req.body.Firstname,
       Lastname: req.body.Lastname,
+      Fullname: req.body.Firstname + ' ' + req.body.Lastname,
       Gender: req.body.Gender,
       Birthday: req.body.Birthday,
       Friends: [],

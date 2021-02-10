@@ -13,6 +13,7 @@ const MainContainer = styled(Box)({
 function FriendsSuggestions() {
 
   const [Suggestions, SetSuggestions] = useState([]);
+  const [FetchMoreSuggestions, SetFetchMoreSuggestions] = useState(false);
 
   useEffect(() => {
 
@@ -26,8 +27,32 @@ function FriendsSuggestions() {
     }).then((response) => response.json())
     .then((json) => SetSuggestions(json));
 
-  }, [])
+  }, [FetchMoreSuggestions])
 
+  const handleAddFriend = (event) => {
+
+    fetch(`http://localhost:5000/users/addfriend/${event.target.parentElement.id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+      }
+    }).then((response) =>  {
+      //Update Friend suggestion list by removing the added friend
+      const CutDownSuggestions = Suggestions.filter(suggestion => suggestion._id !== event.target.parentElement.id);
+      if (CutDownSuggestions.length < 2) {
+        SetFetchMoreSuggestions(!FetchMoreSuggestions);
+      }
+      else {
+        setTimeout(() => SetSuggestions(CutDownSuggestions), 2000);
+      }
+    });
+
+
+  }
+
+  //Currently gets a maximum of 6 friend suggestions
 
   return (
     <MainContainer>
@@ -35,9 +60,9 @@ function FriendsSuggestions() {
             People you may know...
         </Typography>
         {
-          (Suggestions.length > 0) ? Suggestions.map(user => {
+          (Suggestions.length > 0) ? Suggestions.slice(0,6).map(user => {
            return( 
-           <Suggestion user={user} key={user._id}/>
+           <Suggestion user={user} key={user._id} onAddFriend={handleAddFriend}/>
            )
           })
           : <Typography>

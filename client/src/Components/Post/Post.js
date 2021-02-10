@@ -56,7 +56,7 @@ const Post = ({post}) => {
     }).then(response => response.json())
     .then((json) => {
       SetComments(Comments.concat(json));
-      
+
       //Reset comment fields text value
       event.target.firstElementChild.lastChild.firstChild.value = ''
     });
@@ -81,7 +81,7 @@ const Post = ({post}) => {
         <LikesAndShares Postdata={post} liked={Liked}/>
         <Divider />
         <CommentListing Comments={Comments} />
-        <LeaveComment handleLeaveComment={handleLeaveComment} handleTextChange={onTextChange}/>
+        <LeaveComment Post={post} handleLeaveComment={handleLeaveComment} handleTextChange={onTextChange}/>
     </StyledGrid>
   );
 }

@@ -30,7 +30,6 @@ const FormatDate = (date) => {
 
 const AvatarInfo = ({data}) => {
 
-  console.log(data)
   let formattedDate = FormatDate(data.dateAdded);
 
   return (

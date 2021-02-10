@@ -6,17 +6,33 @@ import { useEffect, useState } from 'react';
 
 function AvatarField({user}) {
 
-  return (
 
-      <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
-        <Avatar alt={user.Username} src={user.Avatar}/>
-        <Typography>
-         {(user) ? user.Firstname + ' ' + user.Lastname : ''}
-        </Typography>
+  const User = user.user[0]
+  console.log(user)
 
-      </Box>
+  return(
+    <div>
+      {(User) ? 
+       <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
+       <Avatar alt={User.Firstname} src={User.Avatar}/>
+       <Typography>
+        {user.Fullname}
+       </Typography>
+       </Box>
+      :
+      <p>Tyhjä</p> 
+      }
 
-  );
+
+    </div>
+
+
+
+  )
+
+
+
+       
 }
 
 export default AvatarField;

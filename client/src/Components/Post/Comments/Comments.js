@@ -28,7 +28,7 @@ const Comments = ({Comments}) => {
       <StyledGrid>
         {(Comments.length <= AmountOfCommentsToLoad) ? Comments.map((comment) => {
           return(
-            <div>
+            <div key={comment._id}>
             <Comment data={comment}/>
             <Divider />
             </div>
@@ -37,7 +37,7 @@ const Comments = ({Comments}) => {
         : 
           Comments.slice(0,AmountOfCommentsToLoad).map((comment) => {
           return(
-            <div>
+            <div key={comment._id}>
             <Comment data={comment}/>
             <Divider />
             </div>

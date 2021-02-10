@@ -1,25 +1,40 @@
 import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
-import MainContent from './Components/MainContent/Maincontent'
+import HomeView from './Components/Home/HomeView';
+import ManageFriends from './Components/ManageFriends/ManageFriends';
 import Leftsidebar from './Components/Leftsidebar/Leftsidebar';
 import Rightsidebar from './Components/Rightsidebar/Rightsidebar';
-
-import SignupSideAd from './Components/SignupSideAd/SignupSideAd';
-import { LoggedIn } from './Components/Utils'
-import Box from '@material-ui/core/Box'
-import { useState } from 'react'
+import Navbar from './Components/Navbar/Navbar';
 
 
-import './App.css';
+import Box from '@material-ui/core/Box';
+import { styled } from '@material-ui/core/styles'
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Switch, useHistory } from 'react-router-dom';
+
+import PrivateRoute from './Components/Routes/PrivateRoute';
+import PublicRoute from './Components/Routes/PublicRoute';
+
+const ContainerBox = styled(Box)({
+
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-evenly',
+  width: '100%'
+
+});
+
 
 function App() {
 
   const [User, SetUser] = useState([])
 
+
+
   const handleLogin = (token) => {
+
     localStorage.setItem('JWTtoken', token)
     GetUserInfo();
-
   }
 
   const GetUserInfo = () => {
@@ -33,26 +48,39 @@ function App() {
       },
     
     }).then((response) => response.json())
-      .then((json) => SetUser(json[0]));
-      
+      .then((json) => {
+        SetUser(json);
+      });
 
   }
 
 
   return (
-    <div className="App">
-      <Leftsidebar user={User}/>
-      {(localStorage.getItem('JWTtoken')) ? 
-      <MainContent />
-      :
-      <Box>
-      <Login onLogin={handleLogin}/>
-      <Signup />
-      </Box>
-    }
+    <div>
+      <Navbar user={User}/>
+    <div className="MainContent">
+      <BrowserRouter>
+      <ContainerBox>
+        <Switch>
+          {(localStorage.getItem('JWTtoken')) ? 
+          <>
+            <Leftsidebar user={User}/>
 
-      <Rightsidebar />
+            <PrivateRoute component={HomeView} path="/" exact/>
+            <PrivateRoute component={ManageFriends} path="/friends" exact/>
 
+            <Rightsidebar />
+          </>
+          :  <PublicRoute component={Login} onLogin={handleLogin} restricted={false} path="/" exact />
+
+        }
+        <PublicRoute component={Login} onLogin={handleLogin} restricted={false} path="/login" exact />
+
+        </Switch>
+        </ContainerBox>
+
+      </BrowserRouter>
+    </div>
     </div>
   );
 }
