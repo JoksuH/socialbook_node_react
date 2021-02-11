@@ -81,7 +81,16 @@ const  FriendRequests = ({user}) => {
  }
 
   const OnRequestDecline = (event) => {
-    SetShowFriendRequests(false);
+    fetch(`http://localhost:5000/users/rejectfriend/${event.target.parentElement.id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+      }
+          // Remove rejected friend from requests
+    }).then((response) => SetFriendRequests(FriendRequests.filter(user => user._id != event.target.parentElement.id)));
+          
   }
 
   return (

@@ -105,6 +105,20 @@ router.put('/acceptfriend/:userID', function(req, res, next) {
   });
 });
 
+router.put('/rejectfriend/:userID', function(req, res, next) {
+
+  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
+    if (err) throw err;
+
+    user.Friendrequests = user.Friendrequests.filter(friend => friend._id != req.params.userID);
+    user.save(err => {
+      if (err) throw err;
+      res.send('OK')
+    });
+  });
+});
+
+
 //Remove a friend from current user
 router.put('/removefriend/:userID', function(req, res, next) {
   userModel.findOne({'_id': req.user.id}).exec((err, user) => {
