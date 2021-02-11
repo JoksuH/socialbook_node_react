@@ -37,12 +37,12 @@ router.get('/', function(req, res, next) {
   
 });
 
-//Get Specific User by ID
+//Get friends requests of the current user
+
 router.get('/friendrequests', function(req, res, next) {
   console.log('request shows ups')
 
-  userModel.findOne({'Username': req.user.Username}).populate('Friendrequests', 'Fullname Avatar').exec((err, user) => {
-    console.log(user)
+  userModel.findOne({'Username': req.user.Username}).populate('Friendrequests', 'Fullname Username Avatar').exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
   })
@@ -50,10 +50,10 @@ router.get('/friendrequests', function(req, res, next) {
 });
 
 //Get Specific User by ID
+
 router.get('/search/:searchterm', function(req, res, next) {
   
-  userModel.find({'Fullname': {$regex:  req.params.searchterm, $options: "i"}}).limit(5).exec((err, users) => {
-    console.log(users)
+  userModel.find({'Fullname': {$regex:  req.params.searchterm, $options: "i"}}).limit(6).exec((err, users) => {
     if (err) throw err;
     res.send(JSON.stringify(users));
   })
@@ -62,16 +62,12 @@ router.get('/search/:searchterm', function(req, res, next) {
 
 
 //Send a friend request to specified user
+
 router.put('/requestfriend/:userID', function(req, res, next) {
   userModel.findOne({'_id': req.params.userID}).exec((err, user) => {
 
     if (err) throw err;
-    console.log(typeof(user.Friendrequests))
-   /* if (user.Friendrequests.includes(req.user.id))
-      res.status(403);
-    else if (user.Friend.includes(req.user.id))
-      res.status(403);
-    else */
+
     user.Friendrequests.push(req.user.id);
      user.save(err => {
       if (err) throw err;
@@ -79,6 +75,34 @@ router.put('/requestfriend/:userID', function(req, res, next) {
   });
 
   })
+});
+
+
+//Accept friend request, remove request and add both to each other's friends
+
+router.put('/acceptfriend/:userID', function(req, res, next) {
+
+  userModel.findOne({'_id': req.user.id}).exec((err, user) => {
+    if (err) throw err;
+
+    user.Friendrequests = user.Friendrequests.filter(friend => friend._id != req.params.userID);
+    user.Friends.push(req.params.userID);
+    console.log(user)
+    user.save(err => {
+      if (err) throw err;
+
+      userModel.findOne({'_id': req.params.userID}).exec((err, friend) => {
+        if (err) throw err;
+        friend.Friends.push(req.user.id);
+    
+        friend.save(err => {
+          if (err) throw err;
+          res.send('OK')
+        });
+
+       });
+    });
+  });
 });
 
 //Remove a friend from current user

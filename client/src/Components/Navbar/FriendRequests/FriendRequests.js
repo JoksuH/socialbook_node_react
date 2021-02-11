@@ -47,19 +47,40 @@ const  FriendRequests = ({user}) => {
       }
     }).then((response) => response.json())
     .then((json) => {
-      console.log(json.Friendrequests)
+      console.log(json.Friendrequests.filter(user => user._id != '601d17ca809b660afd323e5f'))
       SetFriendRequests(json.Friendrequests);
       })
  
   }, []);
 
-  console.log(FriendRequests)
 
   const DrawRequests = () => {
     SetShowFriendRequests(true);
   }
 
   const HideRequests = () => {
+    SetShowFriendRequests(false);
+  }
+
+  const OnRequestAccept = (event) => {
+
+
+
+    fetch(`http://localhost:5000/users/acceptfriend/${event.target.parentElement.id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
+      }
+          // Remove added friend from requests
+    }).then((response) => SetFriendRequests(FriendRequests.filter(user => user._id != event.target.parentElement.id)));
+          
+
+       
+ }
+
+  const OnRequestDecline = (event) => {
     SetShowFriendRequests(false);
   }
 
@@ -74,7 +95,7 @@ const  FriendRequests = ({user}) => {
 
               {(ShowFriendRequests) && FriendRequests.map((request) => {
                 return(
-                <FriendRequest user={request}/>
+                <FriendRequest user={request} key={request._id} onAccept={OnRequestAccept} onDecline={OnRequestDecline}/>
                 )
              })
               }

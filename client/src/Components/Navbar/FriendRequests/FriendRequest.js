@@ -41,9 +41,7 @@ const StyledAvatar = styled(Avatar)({
 })
 
 
-function FriendRequest({user}) {
-
-    console.log(user)
+function FriendRequest({user, onAccept, onDecline}) {
 
   return (
         <InnerContainer >
@@ -51,8 +49,8 @@ function FriendRequest({user}) {
           <Text>
               {user.Fullname}
           </Text>
-          <StyledButton color="primary" variant="contained">Accept</StyledButton>
-          <StyledButton color="secondary" variant="contained">Reject</StyledButton>
+          <StyledButton color="primary" variant="contained" onClick={onAccept} id={user._id}>Accept</StyledButton>
+          <StyledButton color="secondary" variant="contained" onClick={onDecline} id={user._id}>Reject</StyledButton>
 
         </InnerContainer>
         
