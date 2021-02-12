@@ -3,7 +3,8 @@ import SidebarLinks from './SidebarLinks/SidebarLinks'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
+import {LoggedIn} from './../Utils'
 
 import { styled } from '@material-ui/core/styles'
 
@@ -21,10 +22,15 @@ const MainGrid = styled(Grid)({
 function Leftsidebar(props) {
 
   let History = useHistory();
+  console.log(LoggedIn())
+
 
   const Logout = () => {
     localStorage.removeItem('JWTtoken');
+    localStorage.removeItem('curUser');
+
     History.push('/');
+
   }
 
   return (

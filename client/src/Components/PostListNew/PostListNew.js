@@ -39,7 +39,7 @@ function PostListNew(props) {
           </Grid>
           )
               })
-             : <p>Loading Posts...</p>
+             : <p>No posts found!</p>
         }
 
       </Grid>

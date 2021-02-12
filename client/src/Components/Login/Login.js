@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -87,7 +87,7 @@ const handlePasswordChange = (event) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign in to access your account
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleLogin}>
           <TextField
@@ -129,6 +129,7 @@ const handlePasswordChange = (event) => {
           </Button>
           
         </form>
+        <Link to="/signup">Not a Member yet? Click here to create your free account</Link>
       </div>
     </Container>
   );

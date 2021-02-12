@@ -28,11 +28,38 @@ userModel.find({_id: {$in: req.user.Friends}}).exec((err, users) => {
 });
 
 
-//Get Specific User by ID
-router.get('/', function(req, res, next) {
-  userModel.findOne({'Username': req.user.Username}).exec((err, user) => {
+//Get current user info
+router.get('/myinfo', function(req, res, next) {
+  userModel.findOne({'_id': req.user._id}).exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
+  })
+  
+});
+
+
+
+//Edit Current users info
+router.put('/myinfo', function(req, res, next) {
+
+  userModel.findOne({'_id': req.user._id}).exec((err, user) => {
+
+    if (err) throw err;
+     
+    user.Username = req.body.Username
+    user.Email = req.body.Email
+    user.Firstname = req.body.Firstname
+    user.Lastname = req.body.Lastname
+    user.Fullname = req.body.Firstname + ' ' + req.body.Lastname
+    user.Gender = req.body.Gender
+    user.Birthday = req.body.Birthday
+    user.Avatar = req.body.Avatar
+
+    user.save(err => {
+      if (err) throw err;
+      res.send('OK')
+    })
+
   })
   
 });
@@ -42,7 +69,7 @@ router.get('/', function(req, res, next) {
 router.get('/friendrequests', function(req, res, next) {
   console.log('request shows ups')
 
-  userModel.findOne({'Username': req.user.Username}).populate('Friendrequests', 'Fullname Username Avatar').exec((err, user) => {
+  userModel.findOne({'_id': req.user._id}).populate('Friendrequests', 'Fullname Username Avatar').exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
   })

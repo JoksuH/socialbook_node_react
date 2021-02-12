@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const user = mongoose.model('user', new mongoose.Schema({
-    Username: {type: String, required: true},
+    Username: {type: String, required: true, unique: true},
     Password: {type: String, required: true},
     Avatar: {type: String},
-    Email: {type: String, required: true, match: /\w+@\w+.\w+/},
+    Email: {type: String, required: true, match: /\w+@\w+.\w+/, unique: true},
     Firstname: {type: String, required: true},
     Lastname: {type: String, required: true},
     Fullname: {type: String, required: true},

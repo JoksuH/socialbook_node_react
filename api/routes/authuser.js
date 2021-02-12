@@ -50,7 +50,21 @@ router.post('/add', function(req, res, next) {
 });
 
   user.save(err => {
-    if (err) throw err;
+    if (err) {
+      if (err.name == 'MongoError' && err.code === 11000) {
+        console.log(Object.keys(err.keyValue)[0]);
+        if(Object.keys(err.keyValue)[0] == 'Username')
+          res.status(403).send({message: 'Error: Username already in use'});
+        else if(Object.keys(err.keyValue)[0] == 'Email')
+        res.status(403).send({message: 'Error: Account found with the same email'});
+        
+        else {res.status(403).send({message: 'Error:'});  }
+
+      }
+      else {
+      throw(err);
+    }
+    } 
     res.send('User Added')
   });
 });

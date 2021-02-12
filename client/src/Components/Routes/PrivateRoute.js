@@ -1,8 +1,12 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 import { LoggedIn } from './../Utils';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
+
+  const history = useHistory()
+
+  console.log('This is private')
 
   return (
 

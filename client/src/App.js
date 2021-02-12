@@ -1,6 +1,7 @@
 import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
 import HomeView from './Components/Home/HomeView';
+import EditProfile from './Components/Profile/EditProfile'
 import ManageFriends from './Components/ManageFriends/ManageFriends';
 import Leftsidebar from './Components/Leftsidebar/Leftsidebar';
 import Navbar from './Components/Navbar/Navbar';
@@ -18,7 +19,7 @@ const ContainerBox = styled(Box)({
 
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'space-evenly',
+  justifyContent: 'space-between',
   width: '100%'
 
 });
@@ -61,18 +62,22 @@ function App() {
       <BrowserRouter>
       <ContainerBox>
         <Switch>
-          {(localStorage.getItem('JWTtoken')) ? 
+          {(localStorage.getItem('JWTtoken')) ?
           <>
             <Leftsidebar user={User}/>
 
             <PrivateRoute component={HomeView} path="/" exact/>
             <PrivateRoute component={ManageFriends} path="/friends" exact/>
+            <PrivateRoute component={EditProfile} path="/profile" exact/>
+
 
           </>
-          :  <PublicRoute component={Login} onLogin={handleLogin} restricted={false} path="/" exact />
+          : <PrivateRoute component={HomeView} path="/" exact/>
+
 
         }
-        <PublicRoute component={Login} onLogin={handleLogin} restricted={false} path="/login" exact />
+        <PublicRoute component={Login} onLogin={handleLogin} restricted={true} path="/login" exact />
+        <PublicRoute component={Signup} onLogin={handleLogin} restricted={true} path="/signup" exact />
 
         </Switch>
         </ContainerBox>
