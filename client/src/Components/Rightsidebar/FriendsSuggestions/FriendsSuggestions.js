@@ -45,7 +45,7 @@ function FriendsSuggestions() {
         SetFetchMoreSuggestions(!FetchMoreSuggestions);
       }
       else {
-        setTimeout(() => SetSuggestions(CutDownSuggestions), 2000);
+        setTimeout(() => SetSuggestions(CutDownSuggestions), 1000);
       }
     });
 

@@ -26,8 +26,12 @@ function Leftsidebar(props) {
 
 
   const Logout = () => {
+
+    console.log(localStorage.getItem('JWTtoken'))
+    console.log((localStorage.getItem('user')))
+
     localStorage.removeItem('JWTtoken');
-    localStorage.removeItem('curUser');
+    localStorage.removeItem('user');
 
     History.push('/');
 

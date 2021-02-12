@@ -26,6 +26,52 @@ router.get('/', function(req, res, next) {
   
 });
 
+/* GET all Posts from another user */
+router.get('/:Username', function(req, res, next) {
+
+//  userModel.findOne({$and: [{'Username': req.params.Username}, {'Friends': req.user._id} ]}).exec((err, user) => {
+  userModel.findOne({'Username': req.params.Username}).exec((err, user) => {
+    if (err) { 
+    res.status(404);
+    return res.send('User Not Found');
+  }
+
+    if (user == null) {
+      res.status(404);
+      return res.send('User Not Found');
+    }
+
+    // Check if user is current user's friend before giving access
+
+    let isInFriends = user.Friends.some((friend) => friend.equals(req.user._id))
+
+    
+    if (!isInFriends) {
+      res.status(403);
+      return res.send('User is not currently your friend');
+
+    }
+
+  //Find all posts by user and their friends, populate in Comments with their author
+  //Turn to lean() so that you can change likes to a number (different type of data)
+
+  postModel.find({$or: [{'Author': user._id}, {"Author" : { $in: user.Friends}}]}).populate('Author').populate({path:'Comments', populate: { path: 'Author' }}).sort('-dateAdded').lean().exec((err, posts) => {
+    if (err) throw err;
+
+    //Change Id's of persons who liked the post to number of likes before returning
+    posts.forEach((post, index) => {
+      posts[index].Likes = post.Likes.length
+
+    })
+   // console.log(posts)
+    res.send(JSON.stringify(posts));
+  })
+  
+});
+
+});
+
+
 //Get Specific Post by ID
 router.get('/:postID', function(req, res, next) {
   postModel.findOne({'_id': req.params.postID}).exec((err, result) => { 
@@ -60,25 +106,7 @@ router.post('/add', function(req, res, next) {
     });
 });
 
-//Edit a Post
-router.put('/:postID', function(req, res, next) {
-  console.log('PUT RECEIVED')
-  postModel.findOne({'_id': req.params.postID}).exec((err, result) => { 
-    if (err) throw err;
 
-    result.Title = req.body.title;
-    result.Body = req.body.body;
-    result.Published = req.body.published;
-
-    console.log(result)
-
-    result.save(err => {
-      if (err) throw err;
-    });
-
-    res.send('DONE');
-});
-});
 
 //Delete a Post
 router.delete('/:postID', function(req, res, next) {

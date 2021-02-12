@@ -54,7 +54,6 @@ const EditProfileForm = ({userInfo}) => {
     const [Avatar, SetAvatar] = useState('');
     const [Birthday, SetBirthday] = useState('');
 
-    console.log(userInfo.Avatar)
     const classes = useStyles();
 
     useEffect(() => {

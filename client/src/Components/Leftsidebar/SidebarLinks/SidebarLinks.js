@@ -25,7 +25,7 @@ function SidebarLinks() {
 
         </ListItem>
         <ListItem>
-        <Link to="/profile">Profile</Link>
+        <Link to="/myprofile">Profile</Link>
         </ListItem>
         <ListItem>
             <ListItemText>

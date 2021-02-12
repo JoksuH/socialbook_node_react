@@ -33,13 +33,14 @@ function App() {
 
   const handleLogin = (token) => {
 
-    localStorage.setItem('JWTtoken', token)
+    localStorage.setItem('JWTtoken', token);
     GetUserInfo();
+    localStorage.setItem('user', JSON.stringify(User.Avatar));
   }
 
   const GetUserInfo = () => {
 
-    fetch('http://localhost:5000/users/', {
+    fetch('http://localhost:5000/users/myinfo', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -50,6 +51,7 @@ function App() {
     }).then((response) => response.json())
       .then((json) => {
         SetUser(json);
+        return json;
       });
 
   }
@@ -64,11 +66,12 @@ function App() {
         <Switch>
           {(localStorage.getItem('JWTtoken')) ?
           <>
-            <Leftsidebar user={User}/>
-
+           <Leftsidebar user={User}/>
+          
             <PrivateRoute component={HomeView} path="/" exact/>
             <PrivateRoute component={ManageFriends} path="/friends" exact/>
-            <PrivateRoute component={EditProfile} path="/profile" exact/>
+            <PrivateRoute component={EditProfile} path="/myprofile" exact/>
+            <PrivateRoute component={HomeView} path="/profile"/>
 
 
           </>
