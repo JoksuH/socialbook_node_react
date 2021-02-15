@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
-    if (action.type === 'ADD_USER') {
+    if (action.type === 'SET_USER') {
         state = action.data
     }
     if (action.type === 'REMOVE_USER') {

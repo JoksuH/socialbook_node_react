@@ -70,7 +70,7 @@ function App() {
     }).then((response) => response.json())
       .then((json) => {
         (dispatch(
-          {type: 'ADD_USER',
+          {type: 'SET_USER',
            data:json
         }))
       });

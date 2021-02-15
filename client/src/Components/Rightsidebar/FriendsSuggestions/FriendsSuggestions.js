@@ -5,74 +5,69 @@ import Suggestion from './Suggestion'
 import { styled } from '@material-ui/core/styles'
 
 const MainContainer = styled(Box)({
-  marginTop: 20
-
+    marginTop: 20,
 })
 
-
 function FriendsSuggestions() {
+    const [Suggestions, SetSuggestions] = useState([])
+    const [FetchMoreSuggestions, SetFetchMoreSuggestions] = useState(false)
 
-  const [Suggestions, SetSuggestions] = useState([]);
-  const [FetchMoreSuggestions, SetFetchMoreSuggestions] = useState(false);
+    useEffect(() => {
+        fetch('http://localhost:5000/users/friendsuggestions', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => SetSuggestions(json))
+    }, [FetchMoreSuggestions])
 
-  useEffect(() => {
+    const handleAddFriend = (event) => {
+        fetch(
+            `http://localhost:5000/users/requestfriend/${event.target.parentElement.id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
+                },
+            }
+        ).then(() => {
+            //Update Friend suggestion list by removing the added friend
+            const CutDownSuggestions = Suggestions.filter(
+                (suggestion) => suggestion._id !== event.target.parentElement.id
+            )
+            // Get more friends suggestions if only less than 5 left and there is enough members to suggest
+            if (CutDownSuggestions.length < 5 && Suggestions.length >= 5) {
+                SetFetchMoreSuggestions(!FetchMoreSuggestions)
+            } else {
+                setTimeout(() => SetSuggestions(CutDownSuggestions), 1000)
+            }
+        })
+    }
 
-    fetch('http://localhost:5000/users/friendsuggestions', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
-      }
-    }).then((response) => response.json())
-    .then((json) => SetSuggestions(json));
-
-  }, [FetchMoreSuggestions])
-
-  const handleAddFriend = (event) => {
-
-    fetch(`http://localhost:5000/users/requestfriend/${event.target.parentElement.id}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("JWTtoken")}`
-      }
-    }).then((response) =>  {
-      //Update Friend suggestion list by removing the added friend
-      const CutDownSuggestions = Suggestions.filter(suggestion => suggestion._id !== event.target.parentElement.id);
-      if (CutDownSuggestions.length < 5) {
-        SetFetchMoreSuggestions(!FetchMoreSuggestions);
-      }
-      else {
-        setTimeout(() => SetSuggestions(CutDownSuggestions), 1000);
-      }
-    });
-
-
-  }
-
-  //Currently gets a maximum of 6 friend suggestions
-
-  return (
-    <MainContainer>
-        <Typography variant="subtitle2">
-            People you may know...
-        </Typography>
-        {
-          (Suggestions.length > 0) ? Suggestions.map(user => {
-           return( 
-           <Suggestion user={user} key={user._id} onAddFriend={handleAddFriend}/>
-           )
-          })
-          : <Typography>
-              Loading Friend Suggestions
-            </Typography>
-
-        }
-
-    </MainContainer>
-  );
+    return (
+        <MainContainer>
+            <Typography variant="subtitle2">People you may know...</Typography>
+            {Suggestions.length > 0 ? (
+                Suggestions.map((user) => {
+                    return (
+                        <Suggestion
+                            user={user}
+                            key={user._id}
+                            onAddFriend={handleAddFriend}
+                        />
+                    )
+                })
+            ) : (
+                <Typography>Loading Friend Suggestions</Typography>
+            )}
+        </MainContainer>
+    )
 }
 
-export default FriendsSuggestions;
+export default FriendsSuggestions

@@ -2,7 +2,6 @@ import AvatarField from './AvatarField/AvatarField'
 import SidebarLinks from './SidebarLinks/SidebarLinks'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import { useHistory } from 'react-router-dom'
 
 import { styled } from '@material-ui/core/styles'
 
@@ -18,7 +17,6 @@ const MainGrid = styled(Grid)({
 
 function Leftsidebar(props) {
 
-  const History = useHistory();
 
   console.log('LEFT SIDE BAR')
 

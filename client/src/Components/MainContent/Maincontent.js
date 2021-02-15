@@ -20,7 +20,6 @@ function Maincontent({ userName }) {
     }, [])
 
     const GetPosts = () => {
-
         //Get current users post list if no userName specified
         let url = 'http://localhost:5000/posts/'
         if (userName !== '') {

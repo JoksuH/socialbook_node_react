@@ -5,7 +5,6 @@ import { styled } from '@material-ui/core/styles'
 import Comment from './Comment';
 import LoadMoreComments from './LoadMoreComments'
 import { useState } from 'react'
-import { connect } from 'react-redux'
 
 
 const StyledGrid = styled(Grid)({
