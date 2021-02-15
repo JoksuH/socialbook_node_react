@@ -3,7 +3,7 @@ import Rightsidebar from './../Rightsidebar/Rightsidebar';
 import { useHistory } from 'react-router-dom'
 
 
-function HomeView() {
+const HomeView = () => {
 
   const History = useHistory()
 

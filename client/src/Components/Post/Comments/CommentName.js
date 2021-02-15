@@ -15,7 +15,7 @@ const CommentName = ({data}) => {
 
   return (
           <Text variant='button' color="primary">
-            {data.Author.Fullname}
+            {data.Author.Firstname + ' ' + data.Author.Lastname}
           </Text>
   );
 }

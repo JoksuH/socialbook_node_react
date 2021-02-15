@@ -9,8 +9,9 @@ import Navbar from './Components/Navbar/Navbar';
 
 import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles'
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, useHistory } from 'react-router-dom';
+import { Switch, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 
 import PrivateRoute from './Components/Routes/PrivateRoute';
 import PublicRoute from './Components/Routes/PublicRoute';
@@ -27,16 +28,33 @@ const ContainerBox = styled(Box)({
 
 function App() {
 
-  const [User, SetUser] = useState([])
+  const dispatch = useDispatch();
+  const History = useHistory();
 
+
+  const [userLoaded, setUserLoaded] = useState(false)
 
 
   const handleLogin = (token) => {
 
     localStorage.setItem('JWTtoken', token);
     GetUserInfo();
-    localStorage.setItem('user', JSON.stringify(User.Avatar));
+    setUserLoaded(true);
   }
+
+  const handleLogout = () => {
+
+    console.log(localStorage.getItem('JWTtoken'))
+
+    localStorage.removeItem('JWTtoken');
+    localStorage.removeItem('user');
+    dispatch(
+      {type: 'REMOVE_USER',
+    })
+    History.push('/login');
+
+  }
+
 
   const GetUserInfo = () => {
 
@@ -50,8 +68,10 @@ function App() {
     
     }).then((response) => response.json())
       .then((json) => {
-        SetUser(json);
-        return json;
+        (dispatch(
+          {type: 'ADD_USER',
+           data:json
+        }))
       });
 
   }
@@ -59,14 +79,13 @@ function App() {
 
   return (
     <div>
-      <Navbar user={User}/>
+      <Navbar />
     <div className="MainContent">
-      <BrowserRouter>
       <ContainerBox>
+      {(localStorage.getItem('JWTtoken')) && <Leftsidebar Logout={handleLogout} /> }
         <Switch>
           {(localStorage.getItem('JWTtoken')) ?
           <>
-           <Leftsidebar user={User}/>
           
             <PrivateRoute component={HomeView} path="/" exact/>
             <PrivateRoute component={ManageFriends} path="/friends" exact/>
@@ -85,7 +104,6 @@ function App() {
         </Switch>
         </ContainerBox>
 
-      </BrowserRouter>
     </div>
     </div>
   );

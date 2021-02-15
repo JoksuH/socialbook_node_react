@@ -3,6 +3,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { styled } from '@material-ui/core/styles'
 import { TextField } from '@material-ui/core';
 import { useState } from 'react'
+import { connect } from 'react-redux'
+
 
 const MainBox = styled(Box)({
 
@@ -22,13 +24,13 @@ const Text = styled(TextField)({
 
     
 
-const LeaveComment = ({handleLeaveComment, handleTextChange, Post}) => {
+const lComment = ({handleLeaveComment, handleTextChange, User}) => {
 
  
 
   return (
       <MainBox>
-          <Avatar style={{marginRight: 15}} alt={Post.Author.Username} src={Post.Author.Avatar}/>
+        {(User) && <Avatar style={{marginRight: 15}} alt={User.Username} src={User.Avatar}/>}
           <form style={{width: "100%"}} noValidate onSubmit={handleLeaveComment}>
           <Text
             label="Share your thoughts"
@@ -44,5 +46,13 @@ const LeaveComment = ({handleLeaveComment, handleTextChange, Post}) => {
       </MainBox>
   );
 }
+
+
+const mapStateToProps = (state) => {
+  return {User: state} 
+}
+
+const LeaveComment = connect(mapStateToProps)(lComment)
+
 
 export default LeaveComment;

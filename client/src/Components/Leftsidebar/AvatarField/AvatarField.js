@@ -1,14 +1,16 @@
 import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import { useEffect, useState } from 'react';
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  console.log(state)
+    return {User: state} 
+}
 
 
-function AvatarField({user}) {
+const AvatarField = ({User}) => {
 
-
-  const User = user.user;
-  console.log(user)
 
   return(
     <div>
@@ -26,13 +28,9 @@ function AvatarField({user}) {
 
     </div>
 
-
-
-  )
-
-
-
-       
+  )  
 }
 
-export default AvatarField;
+const Avatarfield = connect(mapStateToProps)(AvatarField)
+
+export default Avatarfield;

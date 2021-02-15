@@ -5,6 +5,8 @@ import { styled } from '@material-ui/core/styles'
 import Comment from './Comment';
 import LoadMoreComments from './LoadMoreComments'
 import { useState } from 'react'
+import { connect } from 'react-redux'
+
 
 const StyledGrid = styled(Grid)({
 
@@ -38,7 +40,7 @@ const Comments = ({Comments}) => {
           Comments.slice(0,AmountOfCommentsToLoad).map((comment) => {
           return(
             <div key={comment._id}>
-            <Comment data={comment}/>
+            <Comment data={comment} />
             <Divider />
             </div>
           )
@@ -56,4 +58,3 @@ const Comments = ({Comments}) => {
 }
 
 export default Comments;
-//LoadMoreComments
