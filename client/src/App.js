@@ -51,6 +51,7 @@ function App() {
     dispatch(
       {type: 'REMOVE_USER',
     })
+    setUserLoaded(false)
     History.push('/login');
 
   }
@@ -82,9 +83,9 @@ function App() {
       <Navbar />
     <div className="MainContent">
       <ContainerBox>
-      {(localStorage.getItem('JWTtoken')) && <Leftsidebar Logout={handleLogout} /> }
+      {(userLoaded) && <Leftsidebar Logout={handleLogout} /> }
         <Switch>
-          {(localStorage.getItem('JWTtoken')) ?
+          {(userLoaded) ?
           <>
           
             <PrivateRoute component={HomeView} path="/" exact/>
