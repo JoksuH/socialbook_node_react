@@ -10,7 +10,7 @@ function SidebarLinks() {
                 <Link to="/">Homepage</Link>
             </ListItem>
             <ListItem>
-                <ListItemText>Messages</ListItemText>
+            <Link to="/messenger">Messenger</Link>
             </ListItem>
             <ListItem>
                 <Link to="/myprofile">Profile</Link>

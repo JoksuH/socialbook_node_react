@@ -5,6 +5,7 @@ import EditProfile from './Components/Profile/EditProfile'
 import ManageFriends from './Components/ManageFriends/ManageFriends'
 import Leftsidebar from './Components/Leftsidebar/Leftsidebar'
 import Navbar from './Components/Navbar/Navbar'
+import MessengerView from './Components/Messenger/MessengerView'
 
 import Box from '@material-ui/core/Box'
 import { styled } from '@material-ui/core/styles'
@@ -97,6 +98,10 @@ function App() {
                                 <PrivateRoute
                                     component={HomeView}
                                     path="/profile/"
+                                />
+                                <PrivateRoute
+                                    component={MessengerView}
+                                    path="/messenger/"
                                 />
                             </>
                         ) : (

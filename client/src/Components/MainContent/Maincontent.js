@@ -53,7 +53,6 @@ function Maincontent({ userName }) {
     }
 
     const GetUserInfo = () => {
-
         fetch(`http://localhost:5000/users/${userName}`, {
             method: 'GET',
             headers: {
@@ -64,15 +63,19 @@ function Maincontent({ userName }) {
         })
             .then((response) => response.json())
             .then((json) => SetUserInfo(json))
-
     }
 
     return (
         <MainBox>
-            {!UserExists && <p>User doesn't exist. Are you sure you typed the username correctly?</p>}
+            {!UserExists && (
+                <p>
+                    User doesn't exist. Are you sure you typed the username
+                    correctly?
+                </p>
+            )}
 
             {Forbidden && UserExists ? (
-                <WantRequestFriend user={UserInfo}/>
+                <WantRequestFriend user={UserInfo} />
             ) : (
                 <>
                     <Postlist Posts={Posts} />

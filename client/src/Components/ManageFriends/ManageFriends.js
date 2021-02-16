@@ -43,7 +43,7 @@ function ManageFriends() {
            )
           })
           : <Typography>
-              Loading Friend Suggestions
+              Loading Friends...
             </Typography>
 
         }
