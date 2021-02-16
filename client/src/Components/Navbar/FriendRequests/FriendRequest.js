@@ -3,8 +3,6 @@ import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import { styled } from '@material-ui/core/styles'
-import { useState } from 'react'
-import zIndex from '@material-ui/core/styles/zIndex'
 
 const InnerContainer = styled(Box)({
     display: 'flex',

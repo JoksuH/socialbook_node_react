@@ -2,7 +2,6 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
-import ShareIcon from '@material-ui/icons/Share'
 import { styled } from '@material-ui/core/styles'
 
 const StyledBox = styled(Box)({
