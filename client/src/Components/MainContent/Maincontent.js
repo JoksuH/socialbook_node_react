@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Postlist from './../PostList/PostList'
 import NewPost from './../NewPost/NewPost'
+import WantRequestFriend from './../Profile/WantRequestFriend'
 import { styled } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
@@ -12,12 +13,13 @@ const MainBox = styled(Box)({
 
 function Maincontent({ userName }) {
     const [Posts, SetPosts] = useState([])
+    const [UserInfo, SetUserInfo] = useState([])
     const [Forbidden, SetForbidden] = useState(false)
     const [UserExists, SetUserExists] = useState(true)
 
     useEffect(() => {
         GetPosts()
-    }, [])
+    }, [userName])
 
     const GetPosts = () => {
         //Get current users post list if no userName specified
@@ -40,6 +42,7 @@ function Maincontent({ userName }) {
             }
             if (response.status === 403) {
                 SetForbidden(true)
+                GetUserInfo()
                 return
             } else
                 response.json().then((json) => {
@@ -49,18 +52,30 @@ function Maincontent({ userName }) {
         })
     }
 
-    console.log(Posts)
+    const GetUserInfo = () => {
+
+        fetch(`http://localhost:5000/users/${userName}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => SetUserInfo(json))
+
+    }
 
     return (
         <MainBox>
-            {!UserExists && <p>User doesn't exist</p>}
+            {!UserExists && <p>User doesn't exist. Are you sure you typed the username correctly?</p>}
 
             {Forbidden && UserExists ? (
-                <p>Forbidden</p>
+                <WantRequestFriend user={UserInfo}/>
             ) : (
                 <>
                     <Postlist Posts={Posts} />
-                    <NewPost />
                 </>
             )}
         </MainBox>

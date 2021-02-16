@@ -11,7 +11,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     if (action.type === 'REMOVE_USER') {
         state = []
     }
-        console.log(state)
         return state;
     
 }

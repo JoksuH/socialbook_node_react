@@ -34,8 +34,29 @@ router.get("/listfriends", function (req, res, next) {
 });
 
 //Get current user info
-router.get("/myinfo", function (req, res, next) {
+router.get("/myinfo", function (req, res) {
   userModel.findOne({ _id: req.user._id }).exec((err, user) => {
+    if (err) throw err;
+    res.send(JSON.stringify(user));
+  });
+});
+
+//Get friends requests of the current user
+
+router.get("/friendrequests", function (req, res) {
+  userModel
+    .findOne({ _id: req.user._id })
+    .populate("Friendrequests", "Fullname Username Avatar")
+    .exec((err, user) => {
+      if (err) throw err;
+      console.log(user);
+      res.send(JSON.stringify(user));
+    });
+});
+
+//Get current user info
+router.get("/:Username", function (req, res) {
+  userModel.findOne({ Username: req.params.Username }).exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
   });
@@ -43,11 +64,10 @@ router.get("/myinfo", function (req, res, next) {
 
 //Edit Current users info
 router.put("/myinfo", function (req, res) {
-  console.log('HERERERER')
   userModel.findOne({ _id: req.user._id }).exec((err, user) => {
     if (err) throw err;
 
-    console.log(user)
+    console.log(user);
 
     user.Username = req.body.Username;
     user.Email = req.body.Email;
@@ -65,22 +85,9 @@ router.put("/myinfo", function (req, res) {
   });
 });
 
-//Get friends requests of the current user
-
-router.get("/friendrequests", function (req, res, next) {
-
-  userModel
-    .findOne({ _id: req.user._id })
-    .populate("Friendrequests", "Fullname Username Avatar")
-    .exec((err, user) => {
-      if (err) throw err;
-      res.send(JSON.stringify(user));
-    });
-});
-
 //Get Specific User by ID
 
-router.get("/search/:searchterm", function (req, res, next) {
+router.get("/search/:searchterm", function (req, res) {
   userModel
     .find({ Fullname: { $regex: req.params.searchterm, $options: "i" } })
     .limit(6)

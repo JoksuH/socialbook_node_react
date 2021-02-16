@@ -10,7 +10,7 @@ const Container = styled(Box)({
     marginLeft: 100,
 })
 
-const FriendRequests = ({ user }) => {
+const FriendRequests = () => {
     const [FriendRequests, SetFriendRequests] = useState([])
     const [ShowFriendRequests, SetShowFriendRequests] = useState(false)
 
@@ -24,11 +24,9 @@ const FriendRequests = ({ user }) => {
             },
         })
             .then((response) => response.json())
-            .then((json) => {
-                console.log(
-                    json.Friendrequests.filter(
-                        (user) => user._id !== '601d17ca809b660afd323e5f'
-                    )
+            .then((json) => { console.log(json)
+                json.Friendrequests.filter(
+                    (user) => user._id !== '601d17ca809b660afd323e5f'
                 )
                 SetFriendRequests(json.Friendrequests)
             })
@@ -54,7 +52,7 @@ const FriendRequests = ({ user }) => {
                 },
                 // Remove added friend from requests
             }
-        ).then((response) =>
+        ).then(() =>
             SetFriendRequests(
                 FriendRequests.filter(
                     (user) => user._id !== event.target.parentElement.id

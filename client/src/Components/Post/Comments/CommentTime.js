@@ -26,7 +26,6 @@ const FormatDate = (date) => {
 
 const CommentTime = ({data}) => {
 
-  console.log(data)
   let formattedDate = FormatDate(data.dateAdded);
 
   return (

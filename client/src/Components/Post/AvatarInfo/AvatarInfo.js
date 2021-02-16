@@ -16,6 +16,10 @@ const StyledAvatar = styled(Avatar)({
     marginLeft: '10px',
 })
 
+const NameText = styled(Typography)({
+    textDecoration: 'none',
+})
+
 const FormatDate = (date) => {
     let splitDate = date.substring(0, date.length - 5).split('T')
     return splitDate
@@ -28,9 +32,14 @@ const AvatarInfo = ({ data }) => {
         <StyledBox>
             <StyledAvatar alt={data.Author.Username} src={data.Author.Avatar} />
             <Box>
-                <Link to={'/profile/' + data.Author.Username}>
+                <NameText
+                    component={Link}
+                    to={'/profile/' + data.Author.Username}
+                    variant="button"
+                    color="primary"
+                >
                     {data.Author.Firstname + ' ' + data.Author.Lastname}
-                </Link>
+                </NameText>
                 <Typography variant="subtitle2">
                     {formattedDate[0] + ' @ ' + formattedDate[1]}
                 </Typography>

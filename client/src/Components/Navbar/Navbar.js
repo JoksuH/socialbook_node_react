@@ -19,12 +19,13 @@ const Image = styled('img')({
     width: 350,
 })
 
-function Navbar({ user }) {
+function Navbar() {
+
     return (
         <MainGrid>
             <Image src={blueLogoWide} />
             <SearchField />
-            <FriendRequests user={user} />
+            <FriendRequests />
         </MainGrid>
     )
 }

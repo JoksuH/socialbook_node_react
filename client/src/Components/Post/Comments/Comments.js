@@ -10,7 +10,7 @@ const StyledGrid = styled(Grid)({
 })
 
 const Comments = ({ Comments }) => {
-    const [AmountOfCommentsToLoad, SetAmountOfCommentsToLoad] = useState(2)
+    const [AmountOfCommentsToLoad, SetAmountOfCommentsToLoad] = useState(4)
 
     const GetMoreComments = (event) => {
         SetAmountOfCommentsToLoad(AmountOfCommentsToLoad + 3)
