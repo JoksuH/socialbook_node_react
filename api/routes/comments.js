@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 
 /* GET all Comments. */
 router.get('/', function(req, res, next) {
-  console.log('TEST')
   commentModel.find().exec((err, result) => { 
     if (err) throw err;
     console.log(result)

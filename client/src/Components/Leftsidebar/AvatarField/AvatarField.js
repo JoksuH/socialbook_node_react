@@ -16,7 +16,7 @@ const AvatarField = ({User}) => {
       {(User !== []) ? 
        <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
        <Avatar alt={User.Firstname} src={User.Avatar}/>
-       <Typography>
+       <Typography style={{marginLeft: 15, marginTop: 5}}>
         {User.Fullname}
        </Typography>
        </Box>

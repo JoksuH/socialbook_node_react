@@ -26,6 +26,8 @@ const commentsRouter = require('./routes/comments');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/authuser');
 const likesRouter = require('./routes/likes');
+const conversationRouter = require('./routes/conversations');
+
 
 
 
@@ -66,6 +68,8 @@ app.use('/user/auth', authRouter);
 app.use('/comments', passport.authenticate('jwt', {session:false}), commentsRouter);
 app.use('/posts', passport.authenticate('jwt', {session:false}), postsRouter);
 app.use('/likes',passport.authenticate('jwt', {session:false}), likesRouter)
+app.use('/conversations',passport.authenticate('jwt', {session:false}), conversationRouter)
+
 
 
 

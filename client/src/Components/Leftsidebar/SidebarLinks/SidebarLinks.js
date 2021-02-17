@@ -1,6 +1,5 @@
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import { Link } from 'react-router-dom'
 
 function SidebarLinks() {
@@ -14,9 +13,6 @@ function SidebarLinks() {
             </ListItem>
             <ListItem>
                 <Link to="/myprofile">Profile</Link>
-            </ListItem>
-            <ListItem>
-                <ListItemText>Friends Online</ListItemText>
             </ListItem>
             <ListItem>
                 <Link to="/friends">Manage Friends</Link>

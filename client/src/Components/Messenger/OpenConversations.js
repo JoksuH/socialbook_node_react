@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react'
 import StartNewConversation from './StartNewConversation'
 import FriendList from './FriendList/FriendList'
+import OpenConversation from './OpenConversation'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import { styled } from '@material-ui/core/styles'
@@ -9,26 +10,38 @@ const MainBox = styled(Container)({
     width: '40%',
     marginBottom: '15px',
     marginTop: '15px',
-    border: '2px solid blue',
 })
 
-const OpenConversationsList = ({onNewConversationClick}) => {
+const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onChangeActiveConversationClick, onDelete}) => {
 
   const [Friends, SetFriends] = useState([])
   const [OpenConversations, SetOpenConversations] = useState([])
 
   useEffect(() => {
+    SetOpenConversations(OpenedConversations)
+    console.log(OpenConversations)
+  }, [OpenedConversations])
 
-      console.log('load conversations')
-  }, [])
 
-
-  const HandleStartNewConversation = (event) => {
+  const HandleStartNewConversation = () => {
     LoadFriendsList();
+  }
+
+  const HandleNewConversationStarted = (user) => {
+    onNewConversationClick(user)
+    SetFriends([])
   }
 
   const StartConversation = (event) => {
     console.log(event.target.parentElement.id)
+  }
+
+  const ChangeActive = (Conversation) => {
+    onChangeActiveConversationClick(Conversation);
+  }
+
+  const SetDelete = (Conversation) => {
+    onDelete(Conversation)
   }
 
 
@@ -48,10 +61,21 @@ const OpenConversationsList = ({onNewConversationClick}) => {
     return (
         <MainBox>
             <StartNewConversation onClick={HandleStartNewConversation}/>
-            {(Friends) && <FriendList Friends={Friends} onClick={onNewConversationClick} />}
+            {(Friends) && <FriendList Friends={Friends} onClick={HandleNewConversationStarted} />}
             <Typography>
               Active Conversations
             </Typography>
+            {(OpenConversations) ? 
+              OpenConversations.map(conversation => {
+                  return (
+                    <OpenConversation Conversation={conversation} key={conversation._id} SetActive={ChangeActive} Delete={SetDelete}/>
+                  )
+              })
+              :
+              <Typography>
+              No Active Conversations Found
+            </Typography>
+}
         </MainBox>
     )
 }

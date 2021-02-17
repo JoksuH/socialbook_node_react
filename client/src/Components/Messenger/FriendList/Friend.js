@@ -40,6 +40,10 @@ const StyledAvatar = styled(Avatar)({
 
 function Friend({user, onClick}) {
 
+    const Clicked = () => {
+        onClick(user)
+    }
+
   return (
     <MainContainer>
         <InnerContainer >
@@ -49,7 +53,7 @@ function Friend({user, onClick}) {
               {user.Fullname}
           </Text>
         </InnerContainer>
-        <FriendButton variant="contained" color="primary" id={user._id} onClick={onClick}>Send a Message</FriendButton>
+        <FriendButton variant="contained" color="primary" id={user._id} onClick={Clicked}>Send a Message</FriendButton>
         
     </MainContainer>
   );

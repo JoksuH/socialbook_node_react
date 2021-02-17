@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const postModel = require('./../models/postModel');
+const messageModel = require('./../models/messageModel');
 
 
 /* GET all Posts. */

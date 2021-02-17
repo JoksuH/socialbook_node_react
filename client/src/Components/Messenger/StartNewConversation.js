@@ -7,7 +7,6 @@ const MainBox = styled(Container)({
   width: '100%',
   marginBottom: '15px',
   marginTop: '15px',
-  border: '2px solid blue'
 })
 
 const ConvButton = styled(Button)({
