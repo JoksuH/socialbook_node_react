@@ -9,6 +9,7 @@ router.get("/", function (req, res) {
   conversationModel
     .find({ Participants: req.user._id })
     .populate("Participants", "Fullname Avatar")
+    .populate("Messages")
     .exec((err, conversations) => {
       if (err) throw err;
       res.send(JSON.stringify(conversations));
@@ -34,10 +35,9 @@ router.put("/:conversationID", function (req, res, next) {
     .exec((err, conversation) => {
       if (err) throw err;
       console.log(conversation)
-      //Participants[1] is current user, [0] is the friend
       const message = new messageModel({
-        Author: conversation.Participants[1],
-        Recipient: conversation.Participants[0],
+        Author: req.body.Author,
+        Recipient: req.body.Recipient,
         Message: req.body.Message
       })
       message.save(err => {
@@ -47,7 +47,7 @@ router.put("/:conversationID", function (req, res, next) {
         conversation.save((err) => {
           if (err) throw err;
   
-          res.send("Message added");
+          res.send(JSON.stringify(message));
         });
   
       })

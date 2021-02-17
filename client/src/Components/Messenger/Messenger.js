@@ -21,6 +21,9 @@ const MainBox = styled(Container)({
 const MessengerView = ({ curUser }) => {
     const [ActiveConversation, SetActiveConversation] = useState([])
     const [OpenedConversations, SetOpenConversations] = useState([])
+    const [CurrentUser, SetCurrentUser] = useState([])
+    const [FriendUser, SetFriendUser] = useState([])
+
 
     useEffect(() => {
         fetch('http://localhost:5000/conversations', {
@@ -94,9 +97,10 @@ const MessengerView = ({ curUser }) => {
                     OpenedConversations={OpenedConversations}
                     onChangeActiveConversationClick={ChangeActiveConversation}
                     onDelete={handleDeleteConversation}
+                    currentUser={curUser}
                 />
                 {!Array.isArray(ActiveConversation) && (
-                    <CurrentConversation Conversation={ActiveConversation} />
+                    <CurrentConversation Conversation={ActiveConversation} currentUser={curUser} />
                 )}
             </MainBox>
         )

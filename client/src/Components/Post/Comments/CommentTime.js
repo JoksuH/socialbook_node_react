@@ -10,6 +10,7 @@ const StyledBox = styled(Box)({
 
 const Text = styled(Typography)({
     fontSize: 12,
+    margin: 'auto'
   
   })
   

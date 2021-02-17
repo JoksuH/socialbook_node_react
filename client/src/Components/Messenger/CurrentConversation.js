@@ -1,6 +1,6 @@
 import ChatBox from './ChatBox'
 import ChatWriteBox from './ChatWriteBox'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 
@@ -10,19 +10,36 @@ const MainBox = styled(Container)({
     marginTop: '15px',
 })
 
-const CurrentConversation = ({ Conversation }) => {
+const CurrentConversation = ({ Conversation, currentUser }) => {
+
+
+    const [Messages, SetMessages] = useState([])
     const [MessageBody, SetMessageBody] = useState('')
+    const [Friend, SetFriend] = useState([])
+
+
+
+    useEffect(() => {
+        SetMessages(Conversation.Messages)
+
+        if (Conversation.Participants[0]._id === currentUser._id)
+            SetFriend(Conversation.Participants[1])
+        else
+            SetFriend(Conversation.Participants[0])
+
+        
+
+
+    }, [Conversation])
 
     const handleBodyChange = (event) => {
         SetMessageBody(event.target.value)
     }
 
-    //Participant [0] is always the other party (friend)
 
 
     const handleSubmit = (event) => {
 
-        console.log(Conversation)
         fetch(`http://localhost:5000/conversations/${Conversation._id}`, {
             method: 'PUT',
             headers: {
@@ -31,19 +48,21 @@ const CurrentConversation = ({ Conversation }) => {
                 Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
             },
             body: JSON.stringify({
-                Author: Conversation.Participants[1]._id,
+                Author: currentUser,
+                Recipient: Friend,
                 Message: MessageBody,
             }),
-        }).then((response) => console.log(response))
-        //.then((json) => console.log(json));
+        }).then((response) => response.json())
+        .then((json) => { 
+            SetMessages(Messages.concat(json))
+        })
 
         event.preventDefault()
     }
 
-    console.log(Conversation)
     return (
         <MainBox>
-            <ChatBox messages={Conversation.Messages} />
+            <ChatBox messages={Messages} user={currentUser} friend={Friend}/>
             <ChatWriteBox onChange={handleBodyChange} onSubmit={handleSubmit} />
         </MainBox>
     )

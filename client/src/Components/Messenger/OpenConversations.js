@@ -12,7 +12,7 @@ const MainBox = styled(Container)({
     marginTop: '15px',
 })
 
-const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onChangeActiveConversationClick, onDelete}) => {
+const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onChangeActiveConversationClick, onDelete, currentUser}) => {
 
   const [Friends, SetFriends] = useState([])
   const [OpenConversations, SetOpenConversations] = useState([])
@@ -30,10 +30,6 @@ const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onC
   const HandleNewConversationStarted = (user) => {
     onNewConversationClick(user)
     SetFriends([])
-  }
-
-  const StartConversation = (event) => {
-    console.log(event.target.parentElement.id)
   }
 
   const ChangeActive = (Conversation) => {
@@ -68,7 +64,7 @@ const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onC
             {(OpenConversations) ? 
               OpenConversations.map(conversation => {
                   return (
-                    <OpenConversation Conversation={conversation} key={conversation._id} SetActive={ChangeActive} Delete={SetDelete}/>
+                    <OpenConversation currentUser={currentUser} Conversation={conversation} key={conversation._id} SetActive={ChangeActive} Delete={SetDelete}/>
                   )
               })
               :

@@ -8,7 +8,6 @@ const MainBox = styled(Container)({
     width: '90%',
     marginBottom: '15px',
     marginTop: '15px',
-    border: '2px solid black',
 })
 
 const ChatWriteBox = ({ onChange, onSubmit }) => {

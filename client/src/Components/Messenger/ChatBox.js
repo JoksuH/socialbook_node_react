@@ -1,23 +1,29 @@
+import ChatMessage from './ChatMessage'
 import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 
 
 const MainBox = styled(Container)({
   width: '90%',
+  height: '50%',
   marginBottom: '15px',
   marginTop: '15px',
-  border: '2px solid black'
+  overflow: 'auto'
 })
 
-const CurrentConversation = ({Messages}) => {
+const ChatBox = ({messages, user, friend}) => {
 
+  console.log(user)
+  console.log(friend)
   
   return (
       <MainBox>
-            <p>Test</p>
+            {(messages) && messages.map(message => {
+              return (<ChatMessage message={message} user={user} friend={friend}/>)
+            })}
       </MainBox>
 
   );
 }
 
-export default CurrentConversation;
+export default ChatBox;

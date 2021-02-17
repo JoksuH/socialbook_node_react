@@ -30,10 +30,12 @@ const Text = styled(Typography)({
 })
 
 
-//Participant [0] is always the other party (friend)
+const OpenConversation = ({currentUser, Conversation, SetActive, Delete}) => {
 
-const OpenConversation = ({Conversation, SetActive, Delete}) => {
+    let friendArrayIndex =  0
 
+    if (Conversation.Participants[0]._id === currentUser._id) 
+        friendArrayIndex = 1
 
     const OnActivate = () => {
         SetActive(Conversation)
@@ -46,10 +48,10 @@ const OpenConversation = ({Conversation, SetActive, Delete}) => {
   return (
       <MainBox >
           <InnerBox onClick={OnActivate}>
-        <Avatar alt={Conversation.Participants[0].Fullname} src={Conversation.Participants[0].Avatar}/>
+        <Avatar alt={Conversation.Participants[friendArrayIndex].Fullname} src={Conversation.Participants[friendArrayIndex].Avatar}/>
 
           <Text>
-          {Conversation.Participants[0].Fullname}
+          {Conversation.Participants[friendArrayIndex].Fullname}
           </Text>
           </InnerBox>
           <InnerBox>
