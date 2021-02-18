@@ -100,6 +100,7 @@ router.post('/add', function(req, res, next) {
 
         result.save(err => {
           if (err) throw err;
+          res.send(JSON.stringify(post))
         });
       });
 

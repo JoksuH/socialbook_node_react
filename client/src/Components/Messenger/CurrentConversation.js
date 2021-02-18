@@ -5,8 +5,8 @@ import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 
 const MainBox = styled(Container)({
-    width: '70%',  
-    height: '30%',
+    width: '90%',  
+    height: '50vh',
     marginBottom: '15px',
     marginTop: '15px',
 })
@@ -31,7 +31,7 @@ const CurrentConversation = ({ Conversation, currentUser }) => {
         
 
 
-    }, [Conversation])
+    }, [Conversation, currentUser])
 
     const handleBodyChange = (event) => {
         SetMessageBody(event.target.value)

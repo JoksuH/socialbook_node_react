@@ -1,53 +1,21 @@
 import './WritePad.css'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { styled } from '@material-ui/core/styles'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import React, { useState } from 'react'
 
-const Writepad = () => {
-    const [Body, SetBody] = useState('')
+const StyledButton = styled(Button)({
+marginLeft: '45%'
 
-    const handleBodyChange = (event) => {
-        console.log(Body)
-        SetBody(event.target.value)
-    }
+})
 
-    const UploadArticle = (event) => {
-        fetch('http://localhost:5000/posts/add', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
-            },
-            body: JSON.stringify({
-                body: Body,
-            }),
-        }).then((response) => console.log(response.status))
-        //.then((json) => console.log(json));
 
-        event.preventDefault()
-    }
-
-    const testclick = (event) => {
-        console.log(localStorage.getItem('JWTtoken'))
-
-        fetch('http://localhost:5000/posts/', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
-            },
-        })
-            .then((response) => response.json())
-            .then((json) => console.log(json))
-        event.preventDefault()
-    }
+const Writepad = ({OnPost, OnTextChange, Textvalue}) => {
+    
 
     return (
         <div className="articleWriter">
-            <form onSubmit={UploadArticle}>
+            <form onSubmit={OnPost}>
                 <TextField
                     multiline={false}
                     rows="3"
@@ -55,11 +23,12 @@ const Writepad = () => {
                     fullWidth={true}
                     variant="outlined"
                     label="Post"
-                    onChange={handleBodyChange}
+                    value={Textvalue}
+                    onChange={OnTextChange}
                 />
                 <br />
                 <br />
-                <div className="buttonRow">
+                <div className="buttonRow" >
                     <Button
                         variant="contained"
                         color="primary"
@@ -67,20 +36,11 @@ const Writepad = () => {
                         startIcon={<CloudUploadIcon />}
                     >
                         {' '}
-                        Publish
+                        Post!
                     </Button>
                 </div>
             </form>
-            <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                startIcon={<CloudUploadIcon />}
-                onClick={testclick}
-            >
-                {' '}
-                Test
-            </Button>
+    
         </div>
     )
 }

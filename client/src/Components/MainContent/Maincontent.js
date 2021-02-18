@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import Postlist from './../PostList/PostList'
-import NewPost from './../NewPost/NewPost'
+import AddPost from './../AddPost/AddPost'
 import WantRequestFriend from './../Profile/WantRequestFriend'
 import { styled } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
+
+const mapStateToProps = (state) => {
+    return { LoggedInUser: state }
+}
 
 const MainBox = styled(Box)({
     width: '40%',
@@ -11,7 +16,7 @@ const MainBox = styled(Box)({
     marginTop: '15px',
 })
 
-function Maincontent({ userName }) {
+const MainView = ({ userName, LoggedInUser }) => {
     const [Posts, SetPosts] = useState([])
     const [UserInfo, SetUserInfo] = useState([])
     const [Forbidden, SetForbidden] = useState(false)
@@ -65,6 +70,10 @@ function Maincontent({ userName }) {
             .then((json) => SetUserInfo(json))
     }
 
+    const AddPostToList = () => {
+        GetPosts()
+    }
+
     return (
         <MainBox>
             {!UserExists && (
@@ -78,11 +87,14 @@ function Maincontent({ userName }) {
                 <WantRequestFriend user={UserInfo} />
             ) : (
                 <>
+                    <AddPost onPostAdded={AddPostToList} />
                     <Postlist Posts={Posts} />
                 </>
             )}
         </MainBox>
     )
 }
+
+const Maincontent = connect(mapStateToProps)(MainView)
 
 export default Maincontent

@@ -5,7 +5,6 @@ import RightSidebar from './../Rightsidebar/Rightsidebar'
 
 const EditProfile = () => {
     const [UserInfo, SetUserInfo] = useState([])
-    console.log(UserInfo)
 
     useEffect(() => {
         fetch(`http://localhost:5000/users/myinfo`, {
