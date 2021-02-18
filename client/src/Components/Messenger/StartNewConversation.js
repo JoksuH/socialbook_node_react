@@ -13,12 +13,12 @@ const ConvButton = styled(Button)({
     width: '100%',
   })
   
-const StartNewConversation = ({onClick}) => {
+const StartNewConversation = ({ListOpen, onClick}) => {
 
   return (
       <MainBox>
         <ConvButton color="primary" variant="contained" onClick={onClick}>
-        Start a new conversation
+        {(ListOpen) ? 'Close friend list' : 'Start a new conversation'}
         </ConvButton>
       </MainBox>
 

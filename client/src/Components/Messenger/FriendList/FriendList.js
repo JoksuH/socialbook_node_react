@@ -3,8 +3,10 @@ import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 
 const MainContainer = styled(Container)({
+    height: '40vh',
     marginBottom: '15px',
     marginTop: '15px',
+    overflow: 'auto'
 })
 
 const FriendList = ({Friends, onClick}) => {
@@ -15,12 +17,10 @@ const FriendList = ({Friends, onClick}) => {
 
     return (
         <MainContainer>
-            {Friends.length > 0 ? (
+            {(Friends.length > 0) && (
                 Friends.map((user) => {
                     return <Friend user={user} key={user._id} onClick={FriendSelected}/>
                 })
-            ) : (
-                <p></p>
             )}
         </MainContainer>
     )

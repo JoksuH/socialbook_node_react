@@ -21,9 +21,6 @@ const MainBox = styled(Container)({
 const MessengerView = ({ curUser }) => {
     const [ActiveConversation, SetActiveConversation] = useState([])
     const [OpenedConversations, SetOpenConversations] = useState([])
-    const [CurrentUser, SetCurrentUser] = useState([])
-    const [FriendUser, SetFriendUser] = useState([])
-
 
     useEffect(() => {
         fetch('http://localhost:5000/conversations', {
@@ -56,12 +53,12 @@ const MessengerView = ({ curUser }) => {
             body: JSON.stringify({
                 Participants: ConversationParticipants,
             }),
-        }).then((response) => response.json()).then((json) =>  {
-            console.log(json)
-            StartedConversation._id = json._id
-
-    
         })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                StartedConversation._id = json._id
+            })
 
         SetActiveConversation(StartedConversation)
         SetOpenConversations(OpenedConversations.concat(StartedConversation))
@@ -82,7 +79,6 @@ const MessengerView = ({ curUser }) => {
         }).then(UpdateListAfterDelete(Conversation))
     }
 
-
     const UpdateListAfterDelete = (Conversation) => {
         const updatedOpenedConversations = OpenedConversations.filter(
             (conversation) => conversation._id !== Conversation._id
@@ -90,22 +86,24 @@ const MessengerView = ({ curUser }) => {
         SetOpenConversations(updatedOpenedConversations)
     }
 
-        return (
-            <MainBox>
-                <OpenConversations
-                    onNewConversationClick={StartConversation}
-                    OpenedConversations={OpenedConversations}
-                    onChangeActiveConversationClick={ChangeActiveConversation}
-                    onDelete={handleDeleteConversation}
+    return (
+        <MainBox>
+            <OpenConversations
+                onNewConversationClick={StartConversation}
+                OpenedConversations={OpenedConversations}
+                onChangeActiveConversationClick={ChangeActiveConversation}
+                onDelete={handleDeleteConversation}
+                currentUser={curUser}
+            />
+            {!Array.isArray(ActiveConversation) && (
+                <CurrentConversation
+                    Conversation={ActiveConversation}
                     currentUser={curUser}
                 />
-                {!Array.isArray(ActiveConversation) && (
-                    <CurrentConversation Conversation={ActiveConversation} currentUser={curUser} />
-                )}
-            </MainBox>
-        )
-    }
-
+            )}
+        </MainBox>
+    )
+}
 
 const Messenger = connect(mapStateToProps)(MessengerView)
 

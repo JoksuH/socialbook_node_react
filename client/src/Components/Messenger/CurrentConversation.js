@@ -5,7 +5,8 @@ import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 
 const MainBox = styled(Container)({
-    width: '70%',
+    width: '70%',  
+    height: '30%',
     marginBottom: '15px',
     marginTop: '15px',
 })

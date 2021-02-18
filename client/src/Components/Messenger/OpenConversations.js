@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import StartNewConversation from './StartNewConversation'
 import FriendList from './FriendList/FriendList'
 import OpenConversation from './OpenConversation'
@@ -12,38 +12,61 @@ const MainBox = styled(Container)({
     marginTop: '15px',
 })
 
-const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onChangeActiveConversationClick, onDelete, currentUser}) => {
+const OpenConversationsList = ({
+    onNewConversationClick,
+    OpenedConversations,
+    onChangeActiveConversationClick,
+    onDelete,
+    currentUser,
+}) => {
+    const [Friends, SetFriends] = useState([])
+    const [FriendListOpen, SetFriendListOpen] = useState(false)
+    const [OpenConversations, SetOpenConversations] = useState([])
 
-  const [Friends, SetFriends] = useState([])
-  const [OpenConversations, SetOpenConversations] = useState([])
+    useEffect(() => {
+        SetOpenConversations(OpenedConversations)
+    }, [OpenedConversations])
 
-  useEffect(() => {
-    SetOpenConversations(OpenedConversations)
-    console.log(OpenConversations)
-  }, [OpenedConversations])
+    const HandleStartNewConversation = () => {
+        if (Friends.length !== 0) {
+            SetFriends([])
+            SetFriendListOpen(false)
+        } else LoadFriendsList()
+    }
 
+    const HandleNewConversationStarted = (user) => {
+        onNewConversationClick(user)
+        SetFriends([])
+    }
 
-  const HandleStartNewConversation = () => {
-    LoadFriendsList();
-  }
+    const ChangeActive = (Conversation) => {
+        onChangeActiveConversationClick(Conversation)
+    }
 
-  const HandleNewConversationStarted = (user) => {
-    onNewConversationClick(user)
-    SetFriends([])
-  }
+    const SetDelete = (Conversation) => {
+        onDelete(Conversation)
+    }
 
-  const ChangeActive = (Conversation) => {
-    onChangeActiveConversationClick(Conversation);
-  }
+    //Remove friends with whom the user is already having an open conversation from friend list suggestions
+    const FilterJson = (json) => {
+        let friendList = json
+        let openConversationFriends = new Set()
 
-  const SetDelete = (Conversation) => {
-    onDelete(Conversation)
-  }
+        OpenConversations.forEach((conversation) => {
+            for (let i = 0; i < conversation.Participants.length; i++) {
+                openConversationFriends.add(conversation.Participants[i]._id)
+            }
+        })
+        const filtertedFriendList = friendList.filter(
+            (friend) => !openConversationFriends.has(friend._id)
+        )
 
+        SetFriends(filtertedFriendList)
+        SetFriendListOpen(true)
+    }
 
-  const LoadFriendsList = () => {
-
-    fetch('http://localhost:5000/users/listfriends', {
+    const LoadFriendsList = () => {
+        fetch('http://localhost:5000/users/listfriends', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -52,26 +75,36 @@ const OpenConversationsList = ({onNewConversationClick, OpenedConversations, onC
             },
         })
             .then((response) => response.json())
-            .then((json) => SetFriends(json))
-  }
+            .then((json) => FilterJson(json))
+    }
     return (
         <MainBox>
-            <StartNewConversation onClick={HandleStartNewConversation}/>
-            {(Friends) && <FriendList Friends={Friends} onClick={HandleNewConversationStarted} />}
-            <Typography>
-              Active Conversations
-            </Typography>
-            {(OpenConversations) ? 
-              OpenConversations.map(conversation => {
-                  return (
-                    <OpenConversation currentUser={currentUser} Conversation={conversation} key={conversation._id} SetActive={ChangeActive} Delete={SetDelete}/>
-                  )
-              })
-              :
-              <Typography>
-              No Active Conversations Found
-            </Typography>
-}
+            <StartNewConversation
+                ListOpen={FriendListOpen}
+                onClick={HandleStartNewConversation}
+            />
+            {(Friends.length > 0) && (
+                <FriendList
+                    Friends={Friends}
+                    onClick={HandleNewConversationStarted}
+                />
+            )}
+            <Typography>Active Conversations</Typography>
+            {OpenConversations ? (
+                OpenConversations.map((conversation) => {
+                    return (
+                        <OpenConversation
+                            currentUser={currentUser}
+                            Conversation={conversation}
+                            key={conversation._id}
+                            SetActive={ChangeActive}
+                            Delete={SetDelete}
+                        />
+                    )
+                })
+            ) : (
+                <Typography>No Active Conversations Found</Typography>
+            )}
         </MainBox>
     )
 }

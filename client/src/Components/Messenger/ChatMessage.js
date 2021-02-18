@@ -14,7 +14,7 @@ const MessageText = styled(Container)({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    margin: 'auto'
+    margin: 'auto',
 })
 
 const FriendMessage = styled(Container)({
@@ -33,15 +33,10 @@ const Text = styled(Typography)({
     border: '1px solid grey',
     borderRadius: 3,
     marginTop: '15px',
-    padding: 15
-
+    padding: 15,
 })
 const ChatMessage = ({ message, user, friend }) => {
     let myMessage = false
-    console.log(message)
-    console.log(message.Author)
-    console.log(user._id)
-
     if (message.Author === user._id) {
         myMessage = true
     }
@@ -51,8 +46,8 @@ const ChatMessage = ({ message, user, friend }) => {
             {myMessage ? (
                 <MyMessage>
                     <MessageText>
-                    <Text variant="subtitle2">{message.Message}</Text>
-                    <CommentTime data={message}/>
+                        <Text variant="subtitle2">{message.Message}</Text>
+                        <CommentTime data={message} />
                     </MessageText>
                     <Img alt={user.Fullname} src={user.Avatar} />
                 </MyMessage>
@@ -60,8 +55,8 @@ const ChatMessage = ({ message, user, friend }) => {
                 <FriendMessage>
                     <Img alt={friend.Fullname} src={friend.Avatar} />
                     <MessageText>
-                    <Text variant="subtitle2">{message.Message}</Text>
-                    <CommentTime data={message}/>
+                        <Text variant="subtitle2">{message.Message}</Text>
+                        <CommentTime data={message} />
                     </MessageText>
                 </FriendMessage>
             )}
