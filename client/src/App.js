@@ -73,10 +73,10 @@ function App() {
 
     return (
         <div>
-             <Navbar />
+            <Navbar loggedIn={userLoaded}/>
             <div className="MainContent">
                 <ContainerBox>
-                    {userLoaded && <Leftsidebar Logout={handleLogout} />}
+                {userLoaded && <Leftsidebar Logout={handleLogout} />}
                     <Switch>
                         {userLoaded ? (
                             <>

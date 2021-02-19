@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    cursor: 'pointer'
   },
 }));
 
@@ -58,7 +59,6 @@ const LoginForm = (props) => {
       })
     }).then((response) => response.json())
       .then((json) => {
-        console.log(json)
         props.onLogin(json.token);
         History.push("/");
       });

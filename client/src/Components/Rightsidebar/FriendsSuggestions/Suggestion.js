@@ -24,7 +24,8 @@ const InnerContainer = styled(Box)({
 })
 
 const FriendButton = styled(Button)({
-    marginTop: 5
+    marginTop: 5,
+    cursor: 'pointer'
 })
 
 const Text = styled(Typography)({

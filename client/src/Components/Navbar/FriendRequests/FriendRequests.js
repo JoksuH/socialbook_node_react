@@ -24,10 +24,11 @@ const FriendRequests = () => {
             },
         })
             .then((response) => response.json())
-            .then((json) => { console.log(json)
-                json.Friendrequests.filter(
+            .then((json) => {
+         /*       json.Friendrequests.filter(
                     (user) => user._id !== '601d17ca809b660afd323e5f'
                 )
+                */
                 SetFriendRequests(json.Friendrequests)
             })
     }, [])

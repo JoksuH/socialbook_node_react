@@ -2,7 +2,7 @@ import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 
 const MainBox = styled(Container)({
     width: '90%',
@@ -33,10 +33,11 @@ const ChatWriteBox = ({ onChange, onSubmit }) => {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        startIcon={<CloudUploadIcon />}
+                        startIcon={<ChatBubbleOutlineIcon />}
+                        style={{cursor: 'pointer'}}
                     >
                         {' '}
-                        Publish
+                        Send
                     </Button>
                 </div>
             </form>

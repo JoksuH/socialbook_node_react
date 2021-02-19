@@ -17,14 +17,11 @@ const MainGrid = styled(Grid)({
 function Leftsidebar(props) {
 
 
-  console.log('LEFT SIDE BAR')
-
-
   return (
     <MainGrid>
       <AvatarField />
       <SidebarLinks />
-      <Button variant="contained" color="primary" onClick={props.Logout}>LogOut</Button>
+      <Button variant="contained" color="primary" onClick={props.Logout} style={{cursor: 'pointer'}}>LogOut</Button>
     </MainGrid>
   );
 }

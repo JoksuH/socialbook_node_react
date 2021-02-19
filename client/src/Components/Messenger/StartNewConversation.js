@@ -11,6 +11,7 @@ const MainBox = styled(Container)({
 
 const ConvButton = styled(Button)({
     width: '100%',
+    cursor: 'pointer'
   })
   
 const StartNewConversation = ({ListOpen, onClick}) => {
