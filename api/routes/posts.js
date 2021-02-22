@@ -55,7 +55,7 @@ router.get('/:Username', function(req, res, next) {
   //Find all posts by user and their friends, populate in Comments with their author
   //Turn to lean() so that you can change likes to a number (different type of data)
 
-  postModel.find({$or: [{'Author': user._id}, {"Author" : { $in: user.Friends}}]}).populate('Author').populate({path:'Comments', populate: { path: 'Author' }}).sort('-dateAdded').lean().exec((err, posts) => {
+  postModel.find({$or: [{'Author': user._id}, {"Author" : { $in: user.Friends}}]}).populate('Author', 'Fullname Username Firstname Lastname Avatar').populate({path:'Comments', populate: { path: 'Author' }}).sort('-dateAdded').lean().exec((err, posts) => {
     if (err) throw err;
 
     //Change Id's of persons who liked the post to number of likes before returning

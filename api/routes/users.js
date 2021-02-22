@@ -17,6 +17,7 @@ router.get("/friendsuggestions", function (req, res, next) {
         },
       ],
     })
+    .select('-Password -Email -Birthday')
     .limit(8)
     .exec((err, users) => {
       if (err) throw err;
@@ -27,7 +28,7 @@ router.get("/friendsuggestions", function (req, res, next) {
 router.get("/listfriends", function (req, res, next) {
   // Get all the friends of current user
 
-  userModel.find({ _id: { $in: req.user.Friends } }).exec((err, users) => {
+  userModel.find({ _id: { $in: req.user.Friends } }).select('-Password -Email -Birthday').exec((err, users) => {
     if (err) throw err;
     res.send(JSON.stringify(users));
   });
@@ -35,7 +36,7 @@ router.get("/listfriends", function (req, res, next) {
 
 //Get current user info
 router.get("/myinfo", function (req, res) {
-  userModel.findOne({ _id: req.user._id }).exec((err, user) => {
+  userModel.findOne({ _id: req.user._id }).select('-Password').exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
   });
@@ -46,17 +47,17 @@ router.get("/myinfo", function (req, res) {
 router.get("/friendrequests", function (req, res) {
   userModel
     .findOne({ _id: req.user._id })
+    .select('-Password -Email -Birthday')
     .populate("Friendrequests", "Fullname Username Avatar")
     .exec((err, user) => {
       if (err) throw err;
-      console.log(user);
       res.send(JSON.stringify(user));
     });
 });
 
 //Get current user info
 router.get("/:Username", function (req, res) {
-  userModel.findOne({ Username: req.params.Username }).exec((err, user) => {
+  userModel.findOne({ Username: req.params.Username }).select('-Password -Email -Birthday').exec((err, user) => {
     if (err) throw err;
     res.send(JSON.stringify(user));
   });
@@ -64,10 +65,8 @@ router.get("/:Username", function (req, res) {
 
 //Edit Current users info
 router.put("/myinfo", function (req, res) {
-  userModel.findOne({ _id: req.user._id }).exec((err, user) => {
+  userModel.findOne({ _id: req.user._id }).select('-Password').exec((err, user) => {
     if (err) throw err;
-
-    console.log(user);
 
     user.Username = req.body.Username;
     user.Email = req.body.Email;
@@ -90,6 +89,7 @@ router.put("/myinfo", function (req, res) {
 router.get("/search/:searchterm", function (req, res) {
   userModel
     .find({ Fullname: { $regex: req.params.searchterm, $options: "i" } })
+    .select('-Password -Email -Birthday')
     .limit(6)
     .exec((err, users) => {
       if (err) throw err;

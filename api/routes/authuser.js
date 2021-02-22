@@ -1,38 +1,32 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const userModel = require('./../models/userModel');
-const jwt = require('jsonwebtoken');
-const passport = require('passport')
-const bcrypt = require('bcryptjs')
-
+const userModel = require("./../models/userModel");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 // Login user
 
-router.post('/', function(req, res,next) {
-  passport.authenticate('local', {session:false}, (err,user,info) => {
+router.post("/", function (req, res, next) {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
-        message: 'Something wrong with the user',
-        user: user
+        message: "Something wrong with the user",
+        user: user,
       });
     }
-    req.login(user, {session:false}, (err) => {
-      if (err) res.send(err)
+    req.login(user, { session: false }, (err) => {
+      if (err) res.send(err);
 
       const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET);
-      return res.json({token});
-      });
-
-  })(req,res,next);
-  
+      return res.json({ token });
+    });
+  })(req, res, next);
 });
 
-
-
 //Add new User
-router.post('/add', function(req, res, next) {
-
-  bcrypt.hash(req.body.Password, 10, (err,hashedPassword) => {
+router.post("/add", function (req, res, next) {
+  bcrypt.hash(req.body.Password, 10, (err, hashedPassword) => {
     if (err) console.log(err);
 
     const user = new userModel({
@@ -41,33 +35,34 @@ router.post('/add', function(req, res, next) {
       Email: req.body.Email,
       Firstname: req.body.Firstname,
       Lastname: req.body.Lastname,
-      Fullname: req.body.Firstname + ' ' + req.body.Lastname,
+      Fullname: req.body.Firstname + " " + req.body.Lastname,
       Gender: req.body.Gender,
       Birthday: req.body.Birthday,
       Friends: [],
       Posts: [],
-      Joined: new Date().toLocaleString()
-});
+      Joined: new Date().toLocaleString(),
+    });
 
-  user.save(err => {
-    if (err) {
-      if (err.name == 'MongoError' && err.code === 11000) {
-        console.log(Object.keys(err.keyValue)[0]);
-        if(Object.keys(err.keyValue)[0] == 'Username')
-          res.status(403).send({message: 'Error: Username already in use'});
-        else if(Object.keys(err.keyValue)[0] == 'Email')
-        res.status(403).send({message: 'Error: Account found with the same email'});
-        
-        else {res.status(403).send({message: 'Error:'});  }
-
+    user.save((err) => {
+      if (err) {
+        if (err.name == "MongoError" && err.code === 11000) {
+          console.log(Object.keys(err.keyValue)[0]);
+          if (Object.keys(err.keyValue)[0] == "Username")
+            res.status(403).send({ message: "Error: Username already in use" });
+          else if (Object.keys(err.keyValue)[0] == "Email")
+            res
+              .status(403)
+              .send({ message: "Error: Account found with the same email" });
+          else {
+            res.status(403).send({ message: "Error:" });
+          }
+        } else {
+          throw err;
+        }
       }
-      else {
-      throw(err);
-    }
-    } 
-    res.send('User Added')
+      res.send("User Added");
+    });
   });
-});
 });
 
 module.exports = router;

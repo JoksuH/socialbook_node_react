@@ -18,7 +18,6 @@ const ExtractJWT = passportJWT.ExtractJwt;
 
 require("dotenv").config();
 
-const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const commentsRouter = require("./routes/comments");
 const postsRouter = require("./routes/posts");
@@ -56,7 +55,6 @@ app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, "build")));
 
-app.use("/", indexRouter);
 app.use(
   "/users",
   passport.authenticate("jwt", { session: false }),

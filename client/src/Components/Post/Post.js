@@ -20,7 +20,7 @@ const Post = ({ post }) => {
 
     useEffect(() => {
         SetComments(post.Comments)
-    }, [])
+    }, [post])
 
     const onTextChange = (event) => SetComment(event.target.value)
 

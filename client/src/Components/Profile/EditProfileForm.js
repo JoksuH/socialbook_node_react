@@ -46,7 +46,6 @@ const EditProfileForm = ({ userInfo }) => {
     const [Email, SetEmail] = useState('')
     const [LastName, SetLastName] = useState('')
     const [Gender, SetGender] = useState('')
-    const [Password, SetPassword] = useState('')
     const [Avatar, SetAvatar] = useState('')
     const [Birthday, SetBirthday] = useState('')
     const [ChangesSaved, SetChangesSaved] = useState(false)
@@ -77,7 +76,6 @@ const EditProfileForm = ({ userInfo }) => {
             },
             body: JSON.stringify({
                 Username: UserName,
-                Password: Password,
                 Email: Email,
                 Firstname: FirstName,
                 Gender: Gender,
@@ -85,18 +83,15 @@ const EditProfileForm = ({ userInfo }) => {
                 Birthday: Birthday,
                 Avatar: Avatar,
             }),
-        }).then((response) => response.json())
-        //Response is the new edited user profile
-        .then((json) => {
-          (dispatch(
-            {type: 'SET_USER',
-             data:json
-          }))
-          SetChangesSaved(true)
         })
+            .then((response) => response.json())
+            //Response is the new edited user profile
+            .then((json) => {
+                dispatch({ type: 'SET_USER', data: json })
+                SetChangesSaved(true)
+            })
 
         event.preventDefault()
-    
     }
 
     const handleUserNameChange = (event) => {
@@ -107,42 +102,31 @@ const EditProfileForm = ({ userInfo }) => {
     const handleFirstNameChange = (event) => {
         SetFirstName(event.target.value)
         SetChangesSaved(false)
-
     }
 
     const handleLastNameChange = (event) => {
         SetLastName(event.target.value)
         SetChangesSaved(false)
-
     }
 
-    const handlePasswordChange = (event) => {
-        SetPassword(event.target.value)
-        SetChangesSaved(false)
-
-    }
     const handleBirthdayChange = (event) => {
         SetBirthday(event.target.value)
         SetChangesSaved(false)
-
     }
 
     const handleEmailChange = (event) => {
         SetEmail(event.target.value)
         SetChangesSaved(false)
-
     }
 
     const handleGenderChange = (event) => {
         SetGender(event.target.value)
         SetChangesSaved(false)
-
     }
 
     const handleAvatarChange = (event) => {
         SetAvatar(event.target.value)
         SetChangesSaved(false)
-
     }
 
     return (
@@ -210,7 +194,7 @@ const EditProfileForm = ({ userInfo }) => {
                             row
                             aria-label="gender"
                             onChange={handleGenderChange}
-                            value={Gender}
+                            value={Gender ?? 'female'}
                         >
                             <FormControlLabel
                                 value="female"
@@ -229,19 +213,7 @@ const EditProfileForm = ({ userInfo }) => {
                             />
                         </RadioGroup>
                     </FormControl>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        InputLabelProps={{ shrink: true }}
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={handlePasswordChange}
-                    />
+                    
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -276,7 +248,7 @@ const EditProfileForm = ({ userInfo }) => {
                         color="primary"
                         className={classes.submit}
                     >
-                        {(ChangesSaved) ? 'Changes Saved' : 'Save Changes' }
+                        {ChangesSaved ? 'Changes Saved' : 'Save Changes'}
                     </Button>
                 </form>
             </div>
