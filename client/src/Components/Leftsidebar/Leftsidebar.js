@@ -29,11 +29,11 @@ function Leftsidebar(props) {
     const [WideView, SetWideView] = useState(true)
     const [SidebarOpen, SetSidebarOpen] = useState(false)
 
-    const [WindowWidth, SetWindowWidth] = useState(window.Width)
+    const [WindowWidth, SetWindowWidth] = useState(window.innerWidth)
 
     useEffect(() => {
         window.addEventListener('resize', upDateWindowSize)
-        if (WindowWidth < 700) {
+        if (WindowWidth < 1000) {
             SetWideView(false)
         } else {
             SetWideView(true)

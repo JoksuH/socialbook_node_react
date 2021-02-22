@@ -14,7 +14,7 @@ function FriendsSuggestions() {
 
     const [WideView, SetWideView] = useState(true)
 
-    const [WindowWidth, SetWindowWidth] = useState(window.Width)
+    const [WindowWidth, SetWindowWidth] = useState(window.innerWidth)
 
 
     useEffect(() => {
