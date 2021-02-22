@@ -23,7 +23,6 @@ function SearchField() {
     const [SearchSuggestions, SetSearchSuggestions] = useState([])
     const [SearchedWord, SetSearchedWord] = useState('')
 
-
     const History = useHistory()
 
     const HandleSearchInput = (event) => {
@@ -68,7 +67,12 @@ function SearchField() {
             />
             {SearchSuggestions &&
                 SearchSuggestions.map((suggestion) => {
-                    return <SearchSuggestion user={suggestion} OnClick={UserSelected} />
+                    return (
+                        <SearchSuggestion
+                            user={suggestion}
+                            OnClick={UserSelected}
+                        />
+                    )
                 })}
         </MainGrid>
     )

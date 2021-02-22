@@ -1,4 +1,3 @@
-import Rightsidebar from './../Rightsidebar/Rightsidebar';
 import Messenger from './Messenger'
 
 const MessengerView = () => {
@@ -6,7 +5,6 @@ const MessengerView = () => {
   return (
       <>
         <Messenger />
-        <Rightsidebar />
       </>
 
   );

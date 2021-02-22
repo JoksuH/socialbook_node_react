@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 }
 
 const MainBox = styled(Box)({
-    width: '40%',
+    width: '50%',
     marginBottom: '15px',
     marginTop: '15px',
 })

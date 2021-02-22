@@ -4,6 +4,7 @@ import HomeView from './Components/Home/HomeView'
 import EditProfile from './Components/Profile/EditProfile'
 import ManageFriends from './Components/ManageFriends/ManageFriends'
 import Leftsidebar from './Components/Leftsidebar/Leftsidebar'
+import Rightsidebar from './Components/Rightsidebar/Rightsidebar';
 import Navbar from './Components/Navbar/Navbar'
 import MessengerView from './Components/Messenger/MessengerView'
 
@@ -73,55 +74,59 @@ function App() {
 
     return (
         <div>
-            <Navbar loggedIn={userLoaded}/>
-                <ContainerBox>
+            <Navbar loggedIn={userLoaded} />
+            <ContainerBox>
                 {userLoaded && <Leftsidebar Logout={handleLogout} />}
-                    <Switch>
-                        {userLoaded ? (
-                            <>
-                                <PrivateRoute
-                                    component={HomeView}
-                                    path="/"
-                                    exact
-                                />
-                                <PrivateRoute
-                                    component={ManageFriends}
-                                    path="/friends"
-                                    exact
-                                />
-                                <PrivateRoute
-                                    component={EditProfile}
-                                    path="/myprofile"
-                                    exact
-                                />
-                                <PrivateRoute
-                                    component={HomeView}
-                                    path="/profile/"
-                                />
-                                <PrivateRoute
-                                    component={MessengerView}
-                                    path="/messenger/"
-                                />
-                            </>
-                        ) : (
+                <Switch>
+                    {userLoaded ? (
+                        <>
                             <PrivateRoute component={HomeView} path="/" exact />
-                        )}
+                            <PrivateRoute
+                                component={ManageFriends}
+                                path="/friends"
+                                exact
+                            />
+                            <PrivateRoute
+                                component={EditProfile}
+                                path="/myprofile"
+                                exact
+                            />
+                            <PrivateRoute
+                                component={HomeView}
+                                path="/profile/"
+                            />
+                            <PrivateRoute
+                                component={MessengerView}
+                                path="/messenger/"
+                            />
+                        </>
+                    ) : (
                         <PublicRoute
                             component={Login}
                             onLogin={handleLogin}
                             restricted={true}
-                            path="/login"
+                            path="/"
                             exact
                         />
-                        <PublicRoute
-                            component={Signup}
-                            onLogin={handleLogin}
-                            restricted={true}
-                            path="/signup"
-                            exact
-                        />
-                    </Switch>
-                </ContainerBox>
+                    )}
+                    <PublicRoute
+                        component={Login}
+                        onLogin={handleLogin}
+                        restricted={true}
+                        path="/login"
+                        exact
+                    />
+                    <PublicRoute
+                        component={Signup}
+                        onLogin={handleLogin}
+                        restricted={true}
+                        path="/signup"
+                        exact
+                    />
+                </Switch>
+                {userLoaded && <Rightsidebar />}
+
+            </ContainerBox>
         </div>
     )
 }

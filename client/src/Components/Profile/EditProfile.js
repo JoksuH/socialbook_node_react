@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import EditProfileForm from './EditProfileForm'
-import RightSidebar from './../Rightsidebar/Rightsidebar'
 
 const EditProfile = () => {
     const [UserInfo, SetUserInfo] = useState([])
@@ -22,7 +21,6 @@ const EditProfile = () => {
     return (
         <>
             <EditProfileForm userInfo={UserInfo} />
-            <RightSidebar />
         </>
     )
 }

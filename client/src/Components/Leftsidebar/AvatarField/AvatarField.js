@@ -8,21 +8,34 @@ const mapStateToProps = (state) => {
 }
 
 
-const AvatarField = ({User}) => {
+const AvatarField = ({User, largeView}) => {
 
 
   return(
     <div>
-      {(User !== []) ? 
+      {(User !== [] && largeView) && 
        <Box display="flex" flexDirection="row" justifyContent="center" width="200px">
        <Avatar alt={User.Firstname} src={User.Avatar}/>
        <Typography style={{marginLeft: 15, marginTop: 5}}>
         {User.Fullname}
        </Typography>
        </Box>
-      :
-      <p>Tyhjä</p> 
       }
+
+      {(User !== [] && !largeView) && 
+       <Box display="flex" flexDirection="column" justifyContent="center" width="200px">
+       <Avatar alt={User.Firstname} src={User.Avatar} style={{marginLeft: '7vw'}}/>
+       <Typography style={{marginLeft: 15, marginTop: 5, fontSize: 15}}>
+        {User.Firstname}
+       </Typography>
+       <Typography style={{marginLeft: 15, marginTop: 5, fontSize: 15}}>
+        {User.Lastname}
+       </Typography>
+
+       </Box>
+      }
+
+
 
 
     </div>

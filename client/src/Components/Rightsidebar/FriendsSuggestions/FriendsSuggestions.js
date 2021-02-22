@@ -12,6 +12,11 @@ function FriendsSuggestions() {
     const [Suggestions, SetSuggestions] = useState([])
     const [FetchMoreSuggestions, SetFetchMoreSuggestions] = useState(false)
 
+    const [WideView, SetWideView] = useState(true)
+
+    const [WindowWidth, SetWindowWidth] = useState(window.Width)
+
+
     useEffect(() => {
         fetch('http://localhost:5000/users/friendsuggestions', {
             method: 'GET',
@@ -24,6 +29,22 @@ function FriendsSuggestions() {
             .then((response) => response.json())
             .then((json) => SetSuggestions(json))
     }, [FetchMoreSuggestions])
+
+
+    useEffect(() => {
+        window.addEventListener('resize', upDateWindowSize)
+        if (WindowWidth < 1000) {
+            SetWideView(false)
+        } else {
+            SetWideView(true)
+        }
+    }, [WindowWidth])
+
+
+    const upDateWindowSize = () => {
+        SetWindowWidth(window.innerWidth)
+    }
+
 
     const handleAddFriend = (event) => {
         fetch(
@@ -60,6 +81,7 @@ function FriendsSuggestions() {
                             user={user}
                             key={user._id}
                             onAddFriend={handleAddFriend}
+                            viewWide = {WideView}
                         />
                     )
                 })

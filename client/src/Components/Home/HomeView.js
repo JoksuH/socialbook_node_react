@@ -1,5 +1,4 @@
 import MainContent from './../MainContent/Maincontent'
-import Rightsidebar from './../Rightsidebar/Rightsidebar';
 import { useHistory } from 'react-router-dom'
 
 
@@ -18,7 +17,6 @@ const HomeView = () => {
   return (
       <>
         <MainContent userName={userName}/>
-        <Rightsidebar />
       </>
 
   );
