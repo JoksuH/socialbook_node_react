@@ -52,7 +52,6 @@ const MainView = ({ userName, LoggedInUser }) => {
                 return
             } else
                 response.json().then((json) => {
-                    console.log(json)
                     SetPosts(json)
                     if (userName !== '') {
                     GetUserInfo()
@@ -88,7 +87,7 @@ const MainView = ({ userName, LoggedInUser }) => {
             ) : (
                 <>  
                     {(userName !== '') && <FriendProfileHeader user={UserInfo}/>}
-                    <AddPost onPostAdded={GetPosts()} />
+                    <AddPost onPostAdded={GetPosts} />
                     <Postlist Posts={Posts} />
                 </>
             )}
