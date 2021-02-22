@@ -17,7 +17,7 @@ const MainGrid = styled(Grid)({
 })
 
 const Image = styled('img')({
-    width: 350,
+    width: '15%',
 })
 
 function Navbar({ loggedIn }) {

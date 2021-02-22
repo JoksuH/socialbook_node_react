@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { styled } from '@material-ui/core/styles'
 
 import SearchSuggestion from './SearchSuggestion'
@@ -20,12 +21,17 @@ const Text = styled(TextField)({
 
 function SearchField() {
     const [SearchSuggestions, SetSearchSuggestions] = useState([])
+    const [SearchedWord, SetSearchedWord] = useState('')
+
+
+    const History = useHistory()
 
     const HandleSearchInput = (event) => {
         //fetch suggestions and add them to list
         // if else so that values get removed from window when searchfield is emptied from text
 
         if (event.target.value !== '') {
+            SetSearchedWord(event.target.value)
             fetch(`http://localhost:5000/users/search/${event.target.value}`, {
                 method: 'GET',
                 headers: {
@@ -43,6 +49,12 @@ function SearchField() {
         }
     }
 
+    const UserSelected = (user) => {
+        SetSearchSuggestions([])
+        SetSearchedWord('')
+        History.push('/profile/' + user.Username)
+    }
+
     return (
         <MainGrid>
             <Text
@@ -51,11 +63,12 @@ function SearchField() {
                 size="medium"
                 margin="dense"
                 color="primary"
+                value={SearchedWord}
                 onChange={HandleSearchInput}
             />
             {SearchSuggestions &&
                 SearchSuggestions.map((suggestion) => {
-                    return <SearchSuggestion user={suggestion} />
+                    return <SearchSuggestion user={suggestion} OnClick={UserSelected} />
                 })}
         </MainGrid>
     )

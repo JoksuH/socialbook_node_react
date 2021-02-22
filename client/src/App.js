@@ -74,7 +74,6 @@ function App() {
     return (
         <div>
             <Navbar loggedIn={userLoaded}/>
-            <div className="MainContent">
                 <ContainerBox>
                 {userLoaded && <Leftsidebar Logout={handleLogout} />}
                     <Switch>
@@ -123,7 +122,6 @@ function App() {
                         />
                     </Switch>
                 </ContainerBox>
-            </div>
         </div>
     )
 }

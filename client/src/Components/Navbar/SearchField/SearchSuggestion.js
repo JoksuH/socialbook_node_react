@@ -28,11 +28,14 @@ const StyledAvatar = styled(Avatar)({
     marginLeft: '10px',
 })
 
-function SearchSuggestion({ user }) {
-    return (
-        <InnerContainer>
-            <StyledAvatar alt={user.Username} src={user.Avatar} />
+function SearchSuggestion({ user, OnClick }) {
 
+    const Clicked = () => {
+        OnClick(user)
+    }
+    return (
+        <InnerContainer onClick={Clicked}>
+            <StyledAvatar alt={user.Username} src={user.Avatar} />
             <Text>{user.Fullname}</Text>
         </InnerContainer>
     )

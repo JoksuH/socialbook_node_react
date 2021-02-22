@@ -7,7 +7,7 @@ import HaveFriendRequests from './HaveFriendRequests'
 const Container = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: 100,
+    marginLeft: '5vw',
 })
 
 const FriendRequests = () => {
