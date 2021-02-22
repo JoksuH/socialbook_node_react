@@ -41,7 +41,7 @@ const AddPost = ({onPostAdded}) => {
 
     return (
         <MainContainer>
-            <Typography>
+            <Typography style={{margin: 'auto'}}>
                 Share your thoughts with your friends...
             </Typography>
             <WritePad OnPost={UploadPost} OnTextChange={handleBodyChange} Textvalue={Body}/>

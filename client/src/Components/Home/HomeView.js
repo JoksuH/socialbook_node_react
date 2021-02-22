@@ -1,25 +1,21 @@
 import MainContent from './../MainContent/Maincontent'
 import { useHistory } from 'react-router-dom'
 
-
 const HomeView = () => {
+    const History = useHistory()
 
-  const History = useHistory()
+    let userName = ''
 
-  let userName = '';
+    let location = History.location.pathname
+    if (History.location.pathname !== '/') {
+        userName = location.split('/')[2]
+    } else userName = ''
 
-  let location = History.location.pathname;
-  if (History.location.pathname !== '/') {
-       userName = location.split('/')[2]
-  }
-  else userName = '';
-
-  return (
-      <>
-        <MainContent userName={userName}/>
-      </>
-
-  );
+    return (
+        <>
+            <MainContent userName={userName} />
+        </>
+    )
 }
 
-export default HomeView;
+export default HomeView

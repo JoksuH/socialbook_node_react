@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Postlist from './../PostList/PostList'
 import AddPost from './../AddPost/AddPost'
 import WantRequestFriend from './../Profile/WantRequestFriend'
+import FriendProfileHeader from './../Profile/ProfileHeader'
 import { styled } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
@@ -53,6 +54,9 @@ const MainView = ({ userName, LoggedInUser }) => {
                 response.json().then((json) => {
                     console.log(json)
                     SetPosts(json)
+                    if (userName !== '') {
+                    GetUserInfo()
+                    }
                 })
         })
     }
@@ -70,10 +74,6 @@ const MainView = ({ userName, LoggedInUser }) => {
             .then((json) => SetUserInfo(json))
     }
 
-    const AddPostToList = () => {
-        GetPosts()
-    }
-
     return (
         <MainBox>
             {!UserExists && (
@@ -86,8 +86,9 @@ const MainView = ({ userName, LoggedInUser }) => {
             {Forbidden && UserExists ? (
                 <WantRequestFriend user={UserInfo} />
             ) : (
-                <>
-                    <AddPost onPostAdded={AddPostToList} />
+                <>  
+                    {(userName !== '') && <FriendProfileHeader user={UserInfo}/>}
+                    <AddPost onPostAdded={GetPosts()} />
                     <Postlist Posts={Posts} />
                 </>
             )}

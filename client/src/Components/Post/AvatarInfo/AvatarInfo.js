@@ -18,6 +18,7 @@ const StyledAvatar = styled(Avatar)({
 
 const NameText = styled(Typography)({
     textDecoration: 'none',
+    fontSize: 16,
 })
 
 const FormatDate = (date) => {

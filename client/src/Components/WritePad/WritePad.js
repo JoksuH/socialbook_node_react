@@ -29,7 +29,7 @@ const Writepad = ({OnPost, OnTextChange, Textvalue}) => {
                 <br />
                 <br />
                 <div className="buttonRow" >
-                    <Button
+                    <StyledButton
                         variant="contained"
                         color="primary"
                         type="submit"
@@ -37,7 +37,7 @@ const Writepad = ({OnPost, OnTextChange, Textvalue}) => {
                     >
                         {' '}
                         Post!
-                    </Button>
+                    </StyledButton>
                 </div>
             </form>
     
