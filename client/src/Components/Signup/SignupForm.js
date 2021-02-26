@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignupForm = (props) => {
+const SignupForm = () => {
+
 
     const [Username, SetUsername] = useState('');
     const [FirstName, SetFirstName] = useState('');
@@ -46,12 +47,47 @@ const SignupForm = (props) => {
     const [Gender, SetGender] = useState('');
     const [Password, SetPassword] = useState('');
     const [Birthday, SetBirthday] = useState('');
+    const [UsernameError, SetUsernameError] = useState(false)
+    const [EmailError, SetEmailError] = useState(false)
+
 
     const history = useHistory();
 
   const classes = useStyles();
 
   const handleSignup = (event) => {
+
+    if (Username.length < 2) {
+    alert('Username is too short')
+    event.preventDefault();
+    return
+  }
+  if (FirstName.length < 1) {
+    alert('Please enter your first name')
+    event.preventDefault();
+    return
+  }
+  if (LastName.length < 1) {
+    alert('Please enter your last name')
+    event.preventDefault();
+    return
+  }
+  if (Gender === '') {
+    alert('Please select your gender')
+    event.preventDefault();
+    return
+  }
+  if (Birthday === '') {
+    alert('Please select your Birthday')
+    event.preventDefault();
+    return
+  }
+
+    if (Password.length < 6) {
+    alert('Password is too short')
+    event.preventDefault();
+    return
+  }
 
 
       fetch('http://localhost:5000/user/auth/add', {
@@ -69,8 +105,20 @@ const SignupForm = (props) => {
         Lastname: LastName,
         Birthday: Birthday
           })
-    }).then((response) => history.push('/login'));
-
+    }).then((response) => {
+      if (response.status === 200)
+        history.push('/login')
+      else {
+        response.json().then((json) => {
+          const Errmessage = json.err.message
+          if (Errmessage.includes('Username'))
+          SetUsernameError(true)
+          if (Errmessage.includes('Email'))
+          SetEmailError(true)
+          })
+        }
+        })
+      
       event.preventDefault();
 
   }
@@ -117,7 +165,28 @@ const handlePasswordChange = (event) => {
         <Typography component="h1" variant="h5">
           Create Your Free Account And Get Started Right Away
         </Typography>
+        {(UsernameError && EmailError) && 
+        <Typography variant="h6" style={{marginTop: 20, color: 'red'}}>
+          Please check the form info for errors
+        </Typography>   
+        }
+
         <form className={classes.form} noValidate onSubmit={handleSignup}>
+        {UsernameError ?
+          <TextField
+            error
+            helperText="Username already in use"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoFocus
+            onChange={handleUserNameChange}
+          />
+          :
           <TextField
             variant="outlined"
             margin="normal"
@@ -129,7 +198,10 @@ const handlePasswordChange = (event) => {
             autoFocus
             onChange={handleUserNameChange}
           />
+        }{EmailError ?
           <TextField
+            error
+            helperText="The email address is either not valid or already in use"
             variant="outlined"
             margin="normal"
             required
@@ -139,7 +211,19 @@ const handlePasswordChange = (event) => {
             name="email"
             onChange={handleEmailChange}
           />
-          
+          :
+
+           <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            onChange={handleEmailChange}
+          />
+        }
           <TextField
             variant="outlined"
             margin="normal"

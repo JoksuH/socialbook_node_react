@@ -1,5 +1,4 @@
 import WritePad from './../WritePad/WritePad'
-import Container from '@material-ui/core/Container'
 import { styled } from '@material-ui/core/styles'
 import { useState } from 'react'
 

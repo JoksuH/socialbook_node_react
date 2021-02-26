@@ -42,9 +42,14 @@ function App() {
     }, [])
 
     const handleLogin = (token) => {
-        localStorage.setItem('JWTtoken', token)
-        GetUserInfo()
-        setUserLoaded(true)
+        if (token !== undefined) {
+            localStorage.setItem('JWTtoken', token)
+            GetUserInfo()
+            setUserLoaded(true)
+        }
+        else {
+            alert('Username and/or password was incorrect. Please try again')
+        }
     }
 
     const handleLogout = () => {

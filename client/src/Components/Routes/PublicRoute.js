@@ -4,8 +4,6 @@ import { LoggedIn } from './../Utils';
 
 const PublicRoute = ({component: Component, restricted, ...rest}) => {
   
-  console.log('This is Public')
-
   return (
 
     //restricted false = public route 

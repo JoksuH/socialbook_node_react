@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom'
 import { LoggedIn } from './../Utils'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    console.log('This is private')
 
     return (
         <Route

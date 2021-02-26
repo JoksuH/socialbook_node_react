@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
