@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useApiToFetch } from './../Utils'
 
 import OpenConversations from './OpenConversations'
 import CurrentConversation from './CurrentConversation'
@@ -20,20 +21,7 @@ const MainBox = styled(Container)({
 
 const MessengerView = ({ curUser }) => {
     const [ActiveConversation, SetActiveConversation] = useState([])
-    const [OpenedConversations, SetOpenConversations] = useState([])
-
-    useEffect(() => {
-        fetch('http://localhost:5000/conversations', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
-            },
-        })
-            .then((response) => response.json())
-            .then((json) => SetOpenConversations(json))
-    }, [])
+    const [OpenedConversations, SetOpenConversations] = useApiToFetch('conversations')
 
     const StartConversation = (user) => {
         console.log(user)

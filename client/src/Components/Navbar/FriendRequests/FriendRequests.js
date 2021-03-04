@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box'
 import FriendRequest from './FriendRequest'
 import { styled } from '@material-ui/core/styles'
 import { useState, useEffect } from 'react'
+
 import HaveFriendRequests from './HaveFriendRequests'
 
 const Container = styled(Box)({
@@ -25,10 +26,6 @@ const FriendRequests = () => {
         })
             .then((response) => response.json())
             .then((json) => {
-         /*       json.Friendrequests.filter(
-                    (user) => user._id !== '601d17ca809b660afd323e5f'
-                )
-                */
                 SetFriendRequests(json.Friendrequests)
             })
     }, [])
@@ -74,7 +71,7 @@ const FriendRequests = () => {
                 },
                 // Remove rejected friend from requests
             }
-        ).then((response) =>
+        ).then(() =>
             SetFriendRequests(
                 FriendRequests.filter(
                     (user) => user._id !== event.target.parentElement.id

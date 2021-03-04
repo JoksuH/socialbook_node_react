@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useApiToFetch } from './../Utils'
 import Postlist from './../PostList/PostList'
 import AddPost from './../AddPost/AddPost'
 import WantRequestFriend from './../Profile/WantRequestFriend'
@@ -18,7 +19,7 @@ const MainBox = styled(Box)({
 })
 
 const MainView = ({ userName, LoggedInUser }) => {
-    const [Posts, SetPosts] = useState([])
+    const [Posts, SetPosts] = useApiToFetch(`users/${userName}`)
     const [UserInfo, SetUserInfo] = useState([])
     const [Forbidden, SetForbidden] = useState(false)
     const [UserExists, SetUserExists] = useState(true)

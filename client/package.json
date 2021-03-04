@@ -16,8 +16,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
-    "web-vitals": "^0.2.4"
-  },
+    "clean-css": ">=4.1.11"
+    },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

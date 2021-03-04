@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useEffect, useState } from 'react'
+import { useApiToFetch } from './../../Utils'
 import Suggestion from './Suggestion'
 import { styled } from '@material-ui/core/styles'
 
@@ -9,30 +10,23 @@ const MainContainer = styled(Box)({
 })
 
 function FriendsSuggestions() {
-    const [Suggestions, SetSuggestions] = useState([])
+    const [Suggestions, SetSuggestions] = useApiToFetch('users/friendsuggestions')
     const [FetchMoreSuggestions, SetFetchMoreSuggestions] = useState(false)
 
     const [WideView, SetWideView] = useState(true)
 
     const [WindowWidth, SetWindowWidth] = useState(window.innerWidth)
 
-
-    useEffect(() => {
-        fetch('http://localhost:5000/users/friendsuggestions', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('JWTtoken')}`,
-            },
-        })
-            .then((response) => response.json())
-            .then((json) => SetSuggestions(json))
-    }, [FetchMoreSuggestions])
-
-
     useEffect(() => {
         window.addEventListener('resize', upDateWindowSize)
+
+        return () => window.removeEventListener('resize',upDateWindowSize)
+    }, [])
+
+
+
+    useEffect(() => {
+
         if (WindowWidth < 1000) {
             SetWideView(false)
         } else {
