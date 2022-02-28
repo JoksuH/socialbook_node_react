@@ -24,7 +24,6 @@ router.get("/:articleID", function (req, res, next) {
 
 //Add new Comment
 router.post("/", function (req, res, next) {
-  console.log(req.body);
 
   const comment = new commentModel({
     Author: req.user._id,

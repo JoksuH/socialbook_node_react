@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
       posts[index].Likes = post.Likes.length
 
     })
-   // console.log(posts)
     res.send(JSON.stringify(posts));
   })
   
@@ -111,7 +110,6 @@ router.post('/add', function(req, res, next) {
 
 //Delete a Post
 router.delete('/:postID', function(req, res, next) {
-  console.log(req.params.postID)
   postModel.deleteOne({'_id': req.params.postID}).exec((err, result) => { 
     if (err) throw err;
     res.send(`Article with the id ${req.params.postID} deleted`);
