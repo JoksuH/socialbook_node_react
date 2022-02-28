@@ -23,6 +23,8 @@ User's home page
 Post
 ![Post Preview](https://imgur.com/a/iGCNc10)
 
+<img src="https://imgur.com/a/iGCNc10" alt="Post Preview">
+
 
 Live demo available at https://floating-caverns-87698.herokuapp.com/ using example data fetched from Mongo's cloud database. The demo version doesn't save or edit data in the database for security reasons.
 
