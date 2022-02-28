@@ -22,11 +22,16 @@ User's home page
 ![User Home Preview](https://i.imgur.com/mls0wew.jpeg)
 
 Post
-![Post Preview](https://i.imgur.com/UxPtGLb.jpg)
+![Post Preview](https://i.imgur.com/nJHr9V5.jpg)
 
 
 
 Live demo available at https://floating-caverns-87698.herokuapp.com/ using example data fetched from Mongo's cloud database. The demo version doesn't save or edit data in the database for security reasons.
+
+You can login using the following test account:
+
+username: Majukka
+pass: Koira
 
 
 ## Setup
