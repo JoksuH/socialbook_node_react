@@ -26,7 +26,7 @@ Post
 
 
 
-Live demo available at https://floating-caverns-87698.herokuapp.com/ using example data fetched from Mongo's cloud database. The demo version doesn't save or edit data in the database for security reasons.
+Live demo available at https://socialbookproject.herokuapp.com/ using example data fetched from Mongo's cloud database. The demo version doesn't save or edit data in the database for security reasons.
 
 You can login using the following test account:
 
